@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Dashboard – V.1.96.1 · Grupo Petersen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:  #000000;
+      --g900:   #111111;
+      --g800:   #1A1A1A;
+      --g700:   #2C2C2C;
+      --g600:   #444444;
+      --g500:   #6B6B6B;
+      --g400:   #909090;
+      --g300:   #C4C4C4;
+      --g200:   #E0E0E0;
+      --g100:   #F0F0F0;
+      --g50:    #F5F5F5;
+      --white:  #FFFFFF;
+
+      --bsj:    #F5A800; --bsj-dk: #C98A00; --bsj-lt: rgba(245,168,0,.12);
+      --bsf:    #267D26; --bsf-dk: #1A5A1A; --bsf-lt: rgba(38,125,38,.10);
+      --bsc:    #2B7FD4; --bsc-dk: #1A5FA0; --bsc-lt: rgba(43,127,212,.10);
+      --ber:    #CC1A1A; --ber-dk: #991212; --ber-lt: rgba(204,26,26,.10);
+
+      --ok:     #1A8A4A; --ok-lt:  rgba(26,138,74,.10);
+      --warn:   #D48A00; --warn-lt: rgba(212,138,0,.12);
+      --err:    #CC1A1A; --err-lt:  rgba(204,26,26,.10);
+
+      --font: 'Inter', system-ui, sans-serif;
+      --mono: 'DM Mono', monospace;
+
+      --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-full: 9999px;
+      --sh: 0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.06);
+      --sh-hover: 0 4px 12px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--g50);
+      color: var(--black);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── LOGIN ─────────────────────────────────────────────────────────────── */
+    #login-overlay {
+      position: fixed; inset: 0; z-index: 999;
+      background: var(--g50);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .login-box {
+      background: var(--white);
+      border-radius: var(--r-xl);
+      box-shadow: var(--sh-hover);
+      width: 100%; max-width: 360px;
+      overflow: hidden;
+    }
+
+    .login-header {
+      background: var(--black);
+      padding: 28px 28px 22px;
+      position: relative; overflow: hidden;
+    }
+
+    .login-shapes { position: absolute; inset: 0; }
+    .ls { position: absolute; border-radius: 10px; background: rgba(255,255,255,.05); }
+    .ls1 { width:90px; height:44px; right:20px; top:10px; transform:rotate(-7deg); }
+    .ls2 { width:60px; height:60px; right:60px; top:-20px; transform:rotate(14deg); }
+
+    .login-logo {
+      position: relative;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+
+    .gp-circle {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; color: var(--black); letter-spacing: .2px;
+    }
+
+    .login-brand { color: var(--white); font-size: 13px; font-weight: 600; }
+    .login-brand span { display: block; font-size: 10px; font-weight: 400; color: var(--g400); letter-spacing: .08em; text-transform: uppercase; }
+
+    .login-title {
+      position: relative;
+      font-size: 20px; font-weight: 800;
+      color: var(--white); letter-spacing: -.03em;
+      line-height: 1.2;
+    }
+
+    .login-title em { color: var(--g400); font-style: normal; font-weight: 300; }
+
+    .login-body { padding: 24px 28px; }
+
+    .login-body label {
+      display: block; font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--g500);
+      margin-bottom: 7px;
+    }
+
+    .login-body input[type=password] {
+      width: 100%; padding: 10px 14px;
+      background: var(--g50); border: 1.5px solid var(--g200);
+      border-radius: var(--r-md); font-family: var(--font);
+      font-size: 14px; color: var(--black); outline: none;
+      transition: border-color .2s;
+    }
+
+    .login-body input[type=password]:focus { border-color: var(--black); }
+
+    .login-body button {
+      margin-top: 14px; width: 100%;
+      padding: 10px; background: var(--black); color: var(--white);
+      border: none; border-radius: var(--r-md);
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: opacity .15s;
+    }
+
+    .login-body button:hover { opacity: .8; }
+    .login-error { margin-top: 10px; font-size: 12px; color: var(--err); min-height: 16px; }
+
+    /* ── HEADER ────────────────────────────────────────────────────────────── */
+    .hdr {
+      background: var(--black);
+      position: relative; overflow: hidden;
+    }
+
+    .hdr-shapes { position: absolute; inset: 0; overflow: hidden; }
+    .sh { position: absolute; border-radius: 16px; background: rgba(255,255,255,.04); }
+    .sh1 { width:200px; height:100px; right:80px; top:28px; transform:rotate(-7deg); }
+    .sh2 { width:130px; height:130px; right:250px; top:-28px; transform:rotate(14deg); }
+    .sh3 { width:170px; height:70px; right:36px; bottom:16px; transform:rotate(4deg); }
+    .sh4 { width:80px; height:80px; right:320px; bottom:-16px; transform:rotate(-11deg); }
+
+    .hdr-inner {
+      position: relative; max-width: 1100px; margin: 0 auto;
+      padding: 28px 40px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hdr-left { display: flex; flex-direction: column; gap: 8px; }
+
+    .hdr-logo { display: flex; align-items: center; gap: 11px; }
+
+    .gp-circle-hdr {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: var(--black); letter-spacing: .3px;
+    }
+
+    .gp-word { color: var(--white); font-size: 13px; font-weight: 600; }
+    .gp-word span { display: block; font-size: 10px; font-weight: 400; color: var(--g400); letter-spacing: .1em; text-transform: uppercase; }
+
+    .hdr-title {
+      font-size: 26px; font-weight: 800;
+      color: var(--white); letter-spacing: -.03em; line-height: 1.1;
+    }
+
+    .hdr-title em { color: var(--g400); font-style: normal; font-weight: 300; }
+
+    .hdr-right { text-align: right; flex-shrink: 0; }
+
+    .ver-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.08); color: var(--g300);
+      font-size: 10px; font-weight: 500; letter-spacing: .1em;
+      padding: 4px 12px; border-radius: var(--r-full);
+      border: 1px solid rgba(255,255,255,.1);
+      margin-bottom: 8px;
+    }
+
+    .live-badge {
+      display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+      font-family: var(--mono); font-size: 11px; color: var(--g400);
+    }
+
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--ok);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .countdown-txt { font-size: 10px; color: var(--g500); margin-top: 3px; font-family: var(--mono); }
+
+    /* ── MAIN ──────────────────────────────────────────────────────────────── */
+    .main { max-width: 1100px; margin: 0 auto; padding: 32px 40px 48px; }
+
+    /* ── PROGRESS BAR ──────────────────────────────────────────────────────── */
+    .progress-panel {
+      background: var(--white);
+      border-radius: var(--r-lg); box-shadow: var(--sh);
+      padding: 18px 24px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+
+    .prog-label { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); white-space: nowrap; }
+
+    .prog-track {
+      flex: 1; min-width: 160px;
+      height: 5px; background: var(--g100);
+      border-radius: var(--r-full); overflow: hidden;
+    }
+
+    .prog-fill { height: 100%; border-radius: var(--r-full); background: var(--black); transition: width .6s ease; }
+
+    .prog-right { display: flex; align-items: baseline; gap: 8px; flex-shrink: 0; }
+    .prog-pct { font-size: 26px; font-weight: 800; letter-spacing: -.03em; }
+    .prog-count { font-family: var(--mono); font-size: 11px; color: var(--g400); }
+
+    /* ── GRID ──────────────────────────────────────────────────────────────── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+    /* ── BANK CARD ─────────────────────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: var(--r-xl);
+      box-shadow: var(--sh);
+      overflow: hidden;
+      transition: box-shadow .2s;
+    }
+
+    .card:hover { box-shadow: var(--sh-hover); }
+
+    .card-accent { height: 4px; }
+
+    .card-body { padding: 18px 20px 6px; }
+
+    .card-top {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .bank-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .bank-icon svg { width: 28px; height: 28px; }
+
+    .card-info { flex: 1; }
+
+    .bank-abbr { font-size: 16px; font-weight: 800; letter-spacing: -.02em; }
+    .bank-name-text { font-size: 11px; font-weight: 500; color: var(--g500); line-height: 1.3; margin-top: 1px; }
+
+    .ticket-link {
+      font-family: var(--mono); font-size: 10px; color: var(--g400);
+      text-decoration: none; opacity: .8;
+    }
+
+    .ticket-link:hover { opacity: 1; color: var(--black); }
+
+    /* status badge */
+    .sbadge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px; border-radius: var(--r-full);
+      font-size: 11px; font-weight: 600; white-space: nowrap;
+    }
+
+    .sbadge-ok      { background: var(--ok-lt);   color: var(--ok);   }
+    .sbadge-warn    { background: var(--warn-lt);  color: var(--warn); }
+    .sbadge-err     { background: var(--err-lt);   color: var(--err);  }
+    .sbadge-outline { background: transparent; border: 1.5px solid var(--g300); color: var(--g600); }
+    .sbadge-ghost   { background: var(--g100); color: var(--g500); }
+
+    /* platforms */
+    .platforms { border-top: 1px solid var(--g100); padding: 14px 20px 16px; display: flex; flex-direction: column; gap: 8px; }
+
+    .plat-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+    .plat-name {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 500; color: var(--g600); min-width: 68px;
+    }
+
+    .plat-icon { font-size: 13px; width: 18px; text-align: center; }
+
+    .plat-right { display: flex; align-items: center; gap: 7px; }
+    .plat-key { font-family: var(--mono); font-size: 10px; color: var(--g400); }
+    .plat-none { font-size: 11px; color: var(--g300); font-style: italic; }
+
+    .card-footer {
+      padding: 0 20px 14px;
+      font-size: 11px; color: var(--g400);
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* ── ERROR ─────────────────────────────────────────────────────────────── */
+    .err-banner {
+      background: var(--err-lt); border: 1px solid rgba(204,26,26,.2);
+      border-radius: var(--r-lg); padding: 14px 20px;
+      font-size: 13px; color: var(--err); margin-bottom: 20px;
+    }
+
+    /* ── SKELETON ──────────────────────────────────────────────────────────── */
+    .skel {
+      background: linear-gradient(90deg, var(--g100) 25%, var(--g200) 50%, var(--g100) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--r-sm);
+    }
+
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    .skel-card {
+      background: var(--white); border-radius: var(--r-xl);
+      box-shadow: var(--sh); overflow: hidden;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 18px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+
+    footer .fl { font-size: 12px; color: var(--g500); }
+    footer .fl strong { color: var(--g300); font-weight: 600; }
+    footer .fr { font-family: var(--mono); font-size: 10px; color: var(--g700); letter-spacing: .08em; }
+
+    /* ── HIDDEN ────────────────────────────────────────────────────────────── */
+    #app { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────────────────────────────────── -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-header">
+      <div class="login-shapes"><div class="ls ls1"></div><div class="ls ls2"></div></div>
+      <div class="login-logo">
+        <div class="gp-circle">G·P</div>
+        <div class="login-brand">Grupo Petersen<span>Canales Digitales</span></div>
+      </div>
+      <div class="login-title">UAT Dashboard<br><em>V.1.96.1</em></div>
+    </div>
+    <div class="login-body">
+      <label for="pwd-input">Contraseña de acceso</label>
+      <input type="password" id="pwd-input" placeholder="••••••••••" autocomplete="current-password" />
+      <button id="pwd-btn">Ingresar</button>
+      <div class="login-error" id="login-error"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── APP ───────────────────────────────────────────────────────────────── -->
+<div id="app">
+
+  <header class="hdr">
+    <div class="hdr-shapes">
+      <div class="sh sh1"></div><div class="sh sh2"></div>
+      <div class="sh sh3"></div><div class="sh sh4"></div>
+    </div>
+    <div class="hdr-inner">
+      <div class="hdr-left">
+        <div class="hdr-logo">
+          <div class="gp-circle-hdr">G·P</div>
+          <div class="gp-word">Grupo Petersen<span>Canales Digitales · Banca Minorista</span></div>
+        </div>
+        <div class="hdr-title">Implementación UAT <em>V.1.96.1</em></div>
+      </div>
+      <div class="hdr-right">
+        <div class="ver-tag">Circuito de Aprobación OMNI</div>
+        <div class="live-badge">
+          <div class="live-dot" id="live-dot"></div>
+          <span id="last-update">Cargando...</span>
+        </div>
+        <div class="countdown-txt" id="countdown">Actualizando en 30s</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <div class="progress-panel" id="progress-panel" style="display:none">
+      <div class="prog-label">Progreso General</div>
+      <div class="prog-track">
+        <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+      </div>
+      <div class="prog-right">
+        <div class="prog-pct" id="prog-pct">0%</div>
+        <div class="prog-count" id="prog-count">0 / 0</div>
+      </div>
+    </div>
+
+    <div id="error-container"></div>
+    <div class="grid" id="grid"></div>
+
+  </div>
+
+  <footer>
+    <div class="fl"><strong>Grupo Petersen · Canales Digitales</strong> · Dashboard UAT en tiempo real desde Jira</div>
+    <div class="fr">V.1.96.1 · SPRINT UAT · 2026</div>
+  </footer>
+
+</div><!-- /app -->
+
+<script>
+  // ── CONFIGURACIÓN ──────────────────────────────────────────────────────────
+  const JSONBIN_BIN_ID  = '69c4527fc3097a1dd55d9b96';
+  const DATA_URL        = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`;
+  const PASSWORD_HASH   = 'dd20e2fb682a593862ff0319f3f66d3bd51c9d59e2ea604e4e09258470abefc5';
+  // Contraseña por defecto: petersen2026
+  // Para cambiarla: https://emn178.github.io/online-tools/sha256.html
+  // ──────────────────────────────────────────────────────────────────────────
+
+  // ── BANK CONFIG ────────────────────────────────────────────────────────────
+  const BANK_CONFIG = {
+    BSC: {
+      color: '#2B7FD4',
+      label: 'Banco Santa Cruz',
+      icon: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="8" width="52" height="48" rx="4" fill="#2B7FD4"/>
+        <path d="M6 44 L20 24 L32 36 L44 18 L58 44 L58 56 L6 56Z" fill="#888" opacity=".7"/>
+        <path d="M6 44 L20 24 L32 36 L44 18 L58 44" fill="none" stroke="#000" stroke-width="1.5"/>
+        <polygon points="46,12 47.2,16 51,16 48.1,18.2 49.3,22 46,19.8 42.7,22 43.9,18.2 41,16 44.8,16" fill="#000" opacity=".7"/>
+      </svg>`,
+    },
+    BSJ: {
+      color: '#F5A800',
+      label: 'Banco San Juan',
+      icon: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="32,4 36,28 58,20 38,32 58,44 36,36 32,60 28,36 6,44 26,32 6,20 28,28" fill="#F5A800"/>
+        <polygon points="32,12 34,28 46,18 36,32 46,46 34,36 32,52 30,36 18,46 28,32 18,18 30,28" fill="#C98A00" opacity=".5"/>
+      </svg>`,
+    },
+    BERSA: {
+      color: '#CC1A1A',
+      label: 'Banco Entre Ríos',
+      icon: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="8" width="48" height="48" rx="3" fill="#CC1A1A"/>
+        <path d="M32 52 Q16 44 16 28 Q16 14 32 12" stroke="#000" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M32 52 Q48 44 48 28 Q48 14 32 12" stroke="#000" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+    },
+    BSF: {
+      color: '#267D26',
+      label: 'Banco Santa Fe',
+      icon: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="32" cy="18" rx="14" ry="16" fill="#267D26"/>
+        <ellipse cx="14" cy="36" rx="14" ry="12" fill="#267D26"/>
+        <ellipse cx="50" cy="36" rx="14" ry="12" fill="#267D26"/>
+        <ellipse cx="32" cy="50" rx="14" ry="12" fill="#267D26"/>
+        <line x1="32" y1="8" x2="32" y2="56" stroke="#000" stroke-width="3.5"/>
+        <line x1="8" y1="32" x2="56" y2="32" stroke="#000" stroke-width="3.5"/>
+        <line x1="14" y1="16" x2="50" y2="48" stroke="#000" stroke-width="3"/>
+        <line x1="50" y1="16" x2="14" y2="48" stroke="#000" stroke-width="3"/>
+      </svg>`,
+    },
+  };
+
+  // ── AUTH ───────────────────────────────────────────────────────────────────
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function tryLogin() {
+    const pwd = document.getElementById('pwd-input').value;
+    const hash = await sha256(pwd);
+    if (hash === PASSWORD_HASH) {
+      sessionStorage.setItem('uat_auth', '1');
+      document.getElementById('login-overlay').remove();
+      document.getElementById('app').style.display = 'block';
+      renderSkeletons();
+      fetchAndRender();
+      startCountdown();
+    } else {
+      document.getElementById('login-error').textContent = 'Contraseña incorrecta';
+      document.getElementById('pwd-input').value = '';
+      document.getElementById('pwd-input').focus();
+    }
+  }
+
+  document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+  document.getElementById('pwd-btn').addEventListener('click', tryLogin);
+
+  if (sessionStorage.getItem('uat_auth') === '1') {
+    document.getElementById('login-overlay').remove();
+    document.getElementById('app').style.display = 'block';
+  }
+
+  // ── RENDER ─────────────────────────────────────────────────────────────────
+  const REFRESH_MS = 30000;
+  let countdown = REFRESH_MS / 1000;
+  let timer;
+
+  function badgeClass(type) {
+    return { done: 'sbadge-ok', inprogress: 'sbadge-warn', pending: 'sbadge-outline', review: 'sbadge-outline', other: 'sbadge-ghost', unknown: 'sbadge-ghost' }[type] || 'sbadge-ghost';
+  }
+
+  function badgeIcon(type) {
+    return { done: '✓', inprogress: '◉', pending: '○', review: '◎', other: '·', unknown: '·' }[type] || '·';
+  }
+
+  function platIcon(p) {
+    return p === 'android' ? '🤖' : p === 'ios' ? '' : '🌐';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderCard(bank) {
+    const cfg = BANK_CONFIG[bank.bank] || {};
+    const color = cfg.color || '#000';
+    const icon = cfg.icon || '';
+    const fullLabel = cfg.label || bank.label;
+
+    const platforms = ['android', 'ios', 'web'];
+    const platsHTML = platforms.map(p => {
+      const d = bank.platforms[p];
+      const name = p.charAt(0).toUpperCase() + p.slice(1);
+      const right = d
+        ? `<span class="sbadge ${badgeClass(d.type)}">${badgeIcon(d.type)} ${d.status}</span>
+           <span class="plat-key">${d.key}</span>`
+        : `<span class="plat-none">Sin ticket</span>`;
+      return `
+        <div class="plat-row">
+          <div class="plat-name"><span class="plat-icon">${platIcon(p)}</span>${name}</div>
+          <div class="plat-right">${right}</div>
+        </div>`;
+    }).join('');
+
+    const footerHTML = bank.assignee
+      ? `<div class="card-footer">👤 ${bank.assignee}${bank.updated ? ' · <span style="font-family:var(--mono)">' + formatDate(bank.updated) + '</span>' : ''}</div>`
+      : '';
+
+    return `
+      <div class="card">
+        <div class="card-accent" style="background:${color}"></div>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="bank-icon">${icon}</div>
+            <div class="card-info">
+              <div class="bank-abbr">${bank.bank}</div>
+              <div class="bank-name-text">${fullLabel}</div>
+              <div style="margin-top:5px">
+                <span class="sbadge ${badgeClass(bank.statusType)}">${badgeIcon(bank.statusType)} ${bank.status}</span>
+              </div>
+            </div>
+            <a class="ticket-link" href="https://jira.gbsj.com.ar/browse/${bank.issueKey}" target="_blank">${bank.issueKey} ↗</a>
+          </div>
+        </div>
+        <div class="platforms">${platsHTML}</div>
+        ${footerHTML}
+      </div>`;
+  }
+
+  function renderSkeletons() {
+    document.getElementById('grid').innerHTML = Array(4).fill(0).map(() => `
+      <div class="skel-card">
+        <div class="skel" style="width:40%;height:4px;border-radius:0;margin:-20px -20px 12px;"></div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="skel" style="width:44px;height:44px;border-radius:10px;flex-shrink:0"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+            <div class="skel" style="width:50%;height:14px"></div>
+            <div class="skel" style="width:70%;height:10px"></div>
+          </div>
+        </div>
+        <div class="skel" style="width:100%;height:10px;margin-top:8px"></div>
+        <div class="skel" style="width:100%;height:10px"></div>
+        <div class="skel" style="width:100%;height:10px"></div>
+      </div>`).join('');
+  }
+
+  async function fetchAndRender() {
+    try {
+      const res = await fetch(DATA_URL, { headers: { 'X-Bin-Meta': 'false' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const wrapper = await res.json();
+      const data = wrapper.record || wrapper;
+
+      document.getElementById('error-container').innerHTML = '';
+
+      const panel = document.getElementById('progress-panel');
+      panel.style.display = 'flex';
+      document.getElementById('prog-fill').style.width = data.progress.pct + '%';
+      document.getElementById('prog-pct').textContent = data.progress.pct + '%';
+      document.getElementById('prog-count').textContent = `${data.progress.done} / ${data.progress.total} plataformas`;
+
+      document.getElementById('grid').innerHTML = data.banks.map(renderCard).join('');
+
+      const d = new Date(data.updatedAt);
+      document.getElementById('last-update').textContent = d.toLocaleTimeString('es-AR');
+      document.getElementById('live-dot').style.background = 'var(--ok)';
+    } catch (e) {
+      document.getElementById('error-container').innerHTML =
+        `<div class="err-banner">⚠️ No se pudo obtener los datos: ${e.message}</div>`;
+      document.getElementById('live-dot').style.background = 'var(--err)';
+      document.getElementById('last-update').textContent = 'Error al actualizar';
+    }
+  }
+
+  function startCountdown() {
+    clearInterval(timer);
+    countdown = REFRESH_MS / 1000;
+    timer = setInterval(() => {
+      countdown--;
+      document.getElementById('countdown').textContent = `Actualizando en ${countdown}s`;
+      if (countdown <= 0) { countdown = REFRESH_MS / 1000; fetchAndRender(); }
+    }, 1000);
+  }
+</script>
+</body>
+</html>
