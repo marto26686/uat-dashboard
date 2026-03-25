@@ -414,8 +414,9 @@
 
 <script>
   // ── CONFIGURACIÓN ──────────────────────────────────────────────────────────
-  const JSONBIN_BIN_ID  = '69c4527fc3097a1dd55d9b96';
-  const DATA_URL        = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`;
+  const JSONBIN_BIN_ID     = '69c4527fc3097a1dd55d9b96';
+  const JSONBIN_ACCESS_KEY = '$2a$10$GeuxTBS4X4Pb8djnQLJ8xeEjdJGEIPjfZ2ruFWSu/RCoQPri2q/Ye';
+  const DATA_URL           = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`;
   const PASSWORD_HASH   = 'dd20e2fb682a593862ff0319f3f66d3bd51c9d59e2ea604e4e09258470abefc5';
   // Contraseña por defecto: petersen2026
   // Para cambiarla: https://emn178.github.io/online-tools/sha256.html
@@ -584,7 +585,7 @@
 
   async function fetchAndRender() {
     try {
-      const res = await fetch(DATA_URL, { headers: { 'X-Bin-Meta': 'false' } });
+      const res = await fetch(DATA_URL, { headers: { 'X-Bin-Meta': 'false', 'X-Access-Key': JSONBIN_ACCESS_KEY } });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const wrapper = await res.json();
       const data = wrapper.record || wrapper;
