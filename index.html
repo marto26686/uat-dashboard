@@ -493,11 +493,6 @@
   document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
   document.getElementById('pwd-btn').addEventListener('click', tryLogin);
 
-  if (sessionStorage.getItem('uat_auth') === '1') {
-    document.getElementById('login-overlay').remove();
-    document.getElementById('app').style.display = 'block';
-  }
-
   // ── RENDER ─────────────────────────────────────────────────────────────────
   const REFRESH_MS = 30000;
   let countdown = REFRESH_MS / 1000;
@@ -619,6 +614,16 @@
       document.getElementById('countdown').textContent = `Actualizando en ${countdown}s`;
       if (countdown <= 0) { countdown = REFRESH_MS / 1000; fetchAndRender(); }
     }, 1000);
+  }
+
+  // ── INICIO ─────────────────────────────────────────────────────────────────
+  // Se ejecuta siempre al cargar, con o sin sesión previa
+  if (sessionStorage.getItem('uat_auth') === '1') {
+    document.getElementById('login-overlay').remove();
+    document.getElementById('app').style.display = 'block';
+    renderSkeletons();
+    fetchAndRender();
+    startCountdown();
   }
 </script>
 </body>
