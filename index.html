@@ -494,7 +494,7 @@
   document.getElementById('pwd-btn').addEventListener('click', tryLogin);
 
   // ── RENDER ─────────────────────────────────────────────────────────────────
-  const REFRESH_MS = 30000;
+  const REFRESH_MS = 60 * 60 * 1000; // 1 hora
   let countdown = REFRESH_MS / 1000;
   let timer;
 
@@ -611,7 +611,8 @@
     countdown = REFRESH_MS / 1000;
     timer = setInterval(() => {
       countdown--;
-      document.getElementById('countdown').textContent = `Actualizando en ${countdown}s`;
+      const m = Math.floor(countdown / 60), s = countdown % 60;
+      document.getElementById('countdown').textContent = `Actualizando en ${m}m ${String(s).padStart(2,'0')}s`;
       if (countdown <= 0) { countdown = REFRESH_MS / 1000; fetchAndRender(); }
     }, 1000);
   }
