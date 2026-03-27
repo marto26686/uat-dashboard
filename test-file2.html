@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Release Note — HBI Plataforma v97</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ─── RESET ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F0F0F0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px; line-height: 1.6; color: #111111;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── EMAIL WRAPPER ─── */
+  .email-wrap { max-width: 640px; margin: 40px auto; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.14); }
+
+  /* ─── HEADER ─── */
+  .email-header {
+    background: #000000;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hdr-top { padding: 32px 40px 0; display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+  .gp-badge { display: flex; align-items: center; gap: 10px; }
+  .gp-circle { width: 36px; height: 36px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #000; flex-shrink: 0; }
+  .gp-name { color: #fff; font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .gp-name span { display: block; font-size: 10px; font-weight: 400; color: #6B6B6B; letter-spacing: .1em; text-transform: uppercase; }
+  .hdr-pill { background: rgba(245,168,0,.18); color: #F5A800; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; border: 1px solid rgba(245,168,0,.3); }
+
+  .hdr-body { padding: 28px 40px 36px; position: relative; z-index: 2; }
+  .hdr-label { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #6B6B6B; margin-bottom: 10px; }
+  .hdr-title { font-size: 30px; font-weight: 800; color: #ffffff; line-height: 1.1; letter-spacing: -.03em; margin-bottom: 6px; }
+  .hdr-subtitle { font-size: 14px; color: #909090; font-weight: 400; margin-bottom: 20px; }
+  .hdr-meta { display: flex; gap: 20px; }
+  .hdr-meta-item { text-align: left; }
+  .hdr-meta-val { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -.02em; }
+  .hdr-meta-lbl { font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #6B6B6B; margin-top: 1px; }
+  .hdr-meta-div { width: 1px; background: #2C2C2C; align-self: stretch; }
+
+  /* decoration shapes */
+  .hdr-deco { position: absolute; inset: 0; overflow: hidden; z-index: 1; }
+  .d-shape { position: absolute; border-radius: 14px; background: rgba(255,255,255,.04); }
+  .d1 { width: 180px; height: 90px; right: 40px; top: 30px; transform: rotate(-8deg); }
+  .d2 { width: 110px; height: 110px; right: 190px; top: -30px; transform: rotate(12deg); }
+  .d3 { width: 150px; height: 60px; right: 20px; bottom: 20px; transform: rotate(5deg); }
+  .d4 { width: 70px; height: 70px; right: 290px; bottom: -20px; transform: rotate(-14deg); }
+
+  /* ─── BODY ─── */
+  .email-body { background: #ffffff; }
+
+  /* ─── SECTION ─── */
+  .sec { padding: 32px 40px; }
+  .sec + .sec { border-top: 1px solid #F0F0F0; }
+  .sec-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #909090; margin-bottom: 6px; }
+  .sec-title { font-size: 17px; font-weight: 800; color: #000; letter-spacing: -.02em; margin-bottom: 4px; }
+  .sec-desc { font-size: 13px; color: #6B6B6B; line-height: 1.6; margin-bottom: 20px; }
