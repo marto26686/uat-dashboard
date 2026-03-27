@@ -1,0 +1,74 @@
+{
+  "HBI-5519": {
+    "title": "WhatsApp como canal de contacto en Homebanking",
+    "description": "Incorporación de WhatsApp como nuevo canal de contacto en Homebanking Individuos, reemplazando el chat interno con una experiencia más familiar y accesible para el usuario."
+  },
+  "HBI-3097": {
+    "title": "(Parte 2) Consulta de tablas de parámetros — Códigos Postales",
+    "description": "Mejora en la consulta de tablas de parámetros como códigos postales y localidades, optimizando la carga y precisión de datos para el equipo de Back Office."
+  },
+  "HBI-4003": {
+    "title": "Búsqueda de usuarios por CUIT/CUIL en Back Office",
+    "description": "El equipo de Back Office podrá buscar y gestionar usuarios utilizando su CUIT o CUIL como tipo de documento, ampliando las opciones de identificación disponibles."
+  },
+  "HBI-4724": {
+    "title": "Nomenclatura correcta en apertura de cuenta comitente",
+    "description": "Actualización del título de la operación de apertura de cuenta comitente para reflejar correctamente el tipo de operación a lo largo del flujo del usuario."
+  },
+  "HBI-5591": {
+    "title": "Corrección visual del botón 'Ir a mi perfil'",
+    "description": "Ajuste de color del botón 'Ir a mi perfil' en el menú desplegable de Homebanking para mantener la consistencia visual con el design system de la plataforma."
+  },
+  "HBI-5588": {
+    "title": "Actualización de imágenes en la pantalla de Log In",
+    "description": "Renovación de los recursos visuales en la pantalla de acceso para refrescar la experiencia de ingreso a la plataforma de Homebanking."
+  },
+  "HBI-5578": {
+    "title": "Visualización del texto regulatorio SEUO en dashboard FCI",
+    "description": "Corrección en la visualización del texto SEUO requerido por regulación al pie del dashboard de Fondos Comunes de Inversión en la versión Mobile."
+  },
+  "HBI-3638": {
+    "title": "Integración de Valida en reglas de detección de fraude VU",
+    "description": "Incorporación de Valida como variable de configuración en la invocación de reglas de VU Fraud, mejorando la flexibilidad y mantenibilidad del sistema antifraude."
+  },
+  "HBI-6134": {
+    "title": "App Review con Qualtrics — Android e iOS",
+    "description": "Actualización de la SDK de Qualtrics para recopilar el feedback de los usuarios sobre su experiencia en Mobile Banking en ambas plataformas de forma simultánea."
+  },
+  "HBI-2137": {
+    "title": "SDK Visa 5.6 — G Pay & Apple Wallet",
+    "description": "Actualización a la versión 5.6.01 de la SDK Visa para resolver el problema de paginado de 16k registros, mejorando la estabilidad de los pagos digitales."
+  },
+  "HBI-6275": {
+    "title": "Dispositivos de confianza ordenados por estado y fecha",
+    "description": "Mejora en la gestión de dispositivos de confianza: ahora se listan de forma descendente por estado y fecha, facilitando su validación y administración por el usuario."
+  },
+  "HBI-6319": {
+    "title": "Edición del mail instructivo de Clave ATM desde el BO",
+    "description": "Los operadores de Back Office podrán actualizar directamente el contenido del mail de instrucciones de Clave ATM sin necesidad de un deploy técnico."
+  },
+  "HBI-5936": {
+    "title": "Adobe Journey Optimizer SDK",
+    "description": "Análisis de implementación en curso · Evaluación del impacto en canales digitales y capacidades de comunicación personalizada con el usuario."
+  },
+  "HBI-6199": {
+    "title": "Evaluación de nuevos permisos de plataforma mobile",
+    "description": "Investigación sobre el impacto de incorporar nuevos permisos en la aplicación mobile para habilitar futuras funcionalidades del roadmap."
+  },
+  "HBI-6377": {
+    "title": "UX CAM para Homebanking",
+    "description": "Investigación completada · Solución para grabación y análisis de sesiones de usuario que permite identificar fricciones en la experiencia de HomeBanking."
+  },
+  "HBI-6490": {
+    "title": "Reportería RU — Consulta de tablas transaccionales",
+    "description": "Análisis de acceso a tablas transaccionales para ampliar las capacidades de reportería y auditoría del sistema de usuarios registrados."
+  },
+  "HBI-6339": {
+    "title": "Tiempos de sesión inactiva — Segmento Empresas",
+    "description": "Investigación completada sobre el ajuste óptimo de tiempos de sesión inactiva para usuarios del segmento Empresas, mejorando seguridad y usabilidad."
+  },
+  "HBI-6404": {
+    "title": "ProductSync — Desacoplamiento del flujo de login",
+    "description": "Análisis del impacto de desacoplar ProductSync del proceso de login para reducir tiempos de carga y mejorar la experiencia de acceso a la plataforma."
+  }
+}

@@ -929,14 +929,20 @@ def main():
 
     print(f"[INFO] Estado: {data['counts']}")
 
-    # Enriquecimiento opcional con Claude AI
-    api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    # Enriquecimiento: 1) archivo estático por sprint  2) Claude API  3) fallback Jira
     enriched = {}
-    if api_key:
-        print("[INFO] ANTHROPIC_API_KEY detectada — enriqueciendo con Claude AI…")
-        enriched = enrich_with_claude(data["issues"], sprint["name"], api_key)
+    sprint_id = sprint["id"]
+    static_path = Path(__file__).parent.parent / "enrichments" / f"{sprint_id}.json"
+    if static_path.exists():
+        enriched = json.loads(static_path.read_text(encoding="utf-8"))
+        print(f"[INFO] Enriquecimiento estático cargado: enrichments/{sprint_id}.json ({len(enriched)} issues)")
     else:
-        print("[INFO] Sin ANTHROPIC_API_KEY — usando títulos originales de Jira")
+        api_key = os.getenv("ANTHROPIC_API_KEY", "")
+        if api_key:
+            print("[INFO] ANTHROPIC_API_KEY detectada — enriqueciendo con Claude AI…")
+            enriched = enrich_with_claude(data["issues"], sprint["name"], api_key)
+        else:
+            print("[INFO] Sin enriquecimiento disponible — usando títulos originales de Jira")
 
     # Generate HTML
     dashboard_html = generate_dashboard(sprint, data, days)
