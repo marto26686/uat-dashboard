@@ -44,22 +44,19 @@
   .hdr h1 { font-size: 32px; font-weight: 800; color: var(--white); line-height: 1.1; letter-spacing: -.025em; }
   .hdr h1 em { font-style: normal; color: var(--g400); font-weight: 300; }
   .hdr-right { text-align: right; flex-shrink: 0; }
-  .ver-tag { display: inline-block; background: rgba(245,168,0,.15); color: var(-bsj); font-size: 11px; font-weight: 600; letter-spacing: .06em; padding: 4px 12px; border-radius: var(--r-full); border: 1px solid rgba(245,168,0,.3); margin-bottom: 8px; }
+  .ver-tag { display: inline-block; background: rgba(245,168,0,.15); color: var(--bsj); font-size: 11px; font-weight: 600; letter-spacing: .06em; padding: 4px 12px; border-radius: var(--r-full); border: 1px solid rgba(245,168,0,.3); margin-bottom: 8px; }
   .hdr-meta { font-size: 11px; color: var(--g500); line-height: 1.9; font-family: var(--mono); }
   .hdr-meta strong { color: var(--g300); }
 
   /* ─── LAYOUT ─── */
-  
- :/body { max-width: 1140px; margin: 0 auto; padding: 40px 48px 60px; display: flex; flex-direction: column; gap: 32px; }
-  
- :/eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--g400); margin-bottom: 4px; }
+  .body { max-width: 1140px; margin: 0 auto; padding: 40px 48px 60px; display: flex; flex-direction: column; gap: 32px; }
+  .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--g400); margin-bottom: 4px; }
   .section-title { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: var(--black); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1.5px solid var(--g200); display: flex; align-items: center; justify-content: space-between; }
   .section-title span { font-size: 12px; font-weight: 400; color: var(--g400); letter-spacing: 0; }
 
   /* ─── KPI ROW ─── */
   .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-  
- :/kpsf-card {
+  .kpi-card {
     background: var(--white); border-radius: var(--r-lg); padding: 18px 16px 16px;
     border: 1px solid var(--g200); box-shadow: var(--sh-card);
     border-top: 3px solid var(--g300); position: relative; overflow: hidden;
@@ -68,30 +65,668 @@
   .kpi-card:hover { box-shadow: var(--sh-hover); }
   .kpi-card.done  { border-top-color: var(--ok); }
   .kpi-card.prog  { border-top-color: var(--bsj); }
-  
- :/kpsf-card.test  { border-top-color: var(--info); }
-  .kpr-card.todo  { border-top-color: var(--g400); }
-  
- :/kps-card.total { border-top-color: var(--black); }
-  .kpj-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); margin-bottom: 10px; }
+  .kpi-card.test  { border-top-color: var(--info); }
+  .kpi-card.todo  { border-top-color: var(--g400); }
+  .kpi-card.total { border-top-color: var(--black); }
+  .kpi-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); margin-bottom: 10px; }
   .kpi-val { font-size: 38px; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
   .kpi-pct { font-size: 11px; font-weight: 500; color: var(--g500); margin-top: 6px; }
   .kpi-pct strong { font-weight: 700; }
-  
- :/kp1-pct.ok  strong { color: var(--ok); }
-  
- :/kp1-pct.warn  a strong { color: var(--war�); }
-  
- :/kp1-pct.info strong { color: var(--info); }
+  .kpi-pct.ok   strong { color: var(--ok); }
+  .kpi-pct.warn strong { color: var(--warn); }
+  .kpi-pct.info strong { color: var(--info); }
 
   /* ─── PROGRESS SECTION ─── */
   .progress-card { background: var(--white); border-radius: var(--r-lg); padding: 22px 24px; border: 1px solid var(--g200); box-shadow: var(--sh-card); }
   .prog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
   .prog-title { font-size: 13px; font-weight: 700; color: var(--black); }
-  
- :/prog-sub { font-size: 11px; color: var(--g500); margin-top: 2px; }
+  .prog-sub { font-size: 11px; color: var(--g500); margin-top: 2px; }
   .prog-pct-big { font-size: 32px; font-weight: 800; letter-spacing: -.03em; color: var(--black); }
-  
- :/prog-pct-big span { font-size: 14px; font-weight: 500; color: var(--g400); }
-  
- :/prog-track { height: 10px; background: var(--g100); border-radius: var(--r-full); overflow: hidden; margin-bottom: 10px; display: flex; gap: 2px; }
+  .prog-pct-big span { font-size: 14px; font-weight: 500; color: var(--g400); }
+  .prog-track { height: 10px; background: var(--g100); border-radius: var(--r-full); overflow: hidden; margin-bottom: 10px; display: flex; gap: 2px; }
+  .prog-fill { height: 100%; border-radius: var(--r-full); transition: width .5s; }
+  .prog-fill.done { background: var(--ok); }
+  .prog-fill.test { background: var(--info); }
+  .prog-fill.prog { background: var(--bsj); }
+  .prog-fill.todo { background: var(--g200); }
+  .prog-legend { display: flex; gap: 18px; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--g600); }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ─── SPRINT GOALS ─── */
+  .goals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .goal-item { background: var(--white); border-radius: var(--r-md); padding: 14px 16px; border: 1px solid var(--g200); box-shadow: var(--sh-card); display: flex; gap: 12px; align-items: flex-start; }
+  .goal-num { width: 24px; height: 24px; border-radius: 50%; background: var(--g900); color: var(--white); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .goal-text { font-size: 12px; color: var(--g700); line-height: 1.5; }
+  .goal-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 2px; }
+
+  /* ─── TWO COL LAYOUT ─── */
+  .two-col { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+
+  /* ─── ISSUES TABLE ─── */
+  .table-card { background: var(--white); border-radius: var(--r-lg); border: 1px solid var(--g200); box-shadow: var(--sh-card); overflow: hidden; }
+  .table-hdr { background: var(--g900); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .table-hdr-t { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); }
+  .ds-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .ds-table thead th { background: var(--g100); color: var(--g500); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 8px 14px; text-align: left; border-bottom: 1px solid var(--g200); }
+  .ds-table tbody tr { border-bottom: 1px solid var(--g100); transition: background .15s; }
+  .ds-table tbody tr:hover { background: var(--g50); }
+  .ds-table tbody tr:last-child { border-bottom: none; }
+  .ds-table td { padding: 10px 14px; color: var(--g700); vertical-align: middle; }
+  .ds-table td:first-child { font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--g500); white-space: nowrap; }
+  .issue-sum { font-size: 12px; font-weight: 600; color: var(--black); line-height: 1.35; }
+  .issue-sum small { display: block; font-size: 10px; font-weight: 400; color: var(--g500); margin-top: 1px; }
+
+  /* ─── BADGES ─── */
+  .badge { padding: 2px 9px; border-radius: var(--r-full); font-size: 10px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; }
+  .b-done   { background: rgba(26,138,74,.1);  color: var(--ok); }
+  .b-prog   { background: rgba(245,168,0,.12); color: var(--bsj-dk); }
+  .b-test   { background: rgba(43,127,212,.1); color: var(--bsc-dk); }
+  .b-todo   { background: var(--g100); color: var(--g500); }
+  .b-spike  { background: var(--g100); color: var(--g600); }
+  .b-hist   { background: rgba(43,127,212,.08); color: var(--bsc-dk); }
+  .b-task   { background: rgba(38,125,38,.08); color: var(--bsf-dk); }
+
+  /* ─── TYPE CHIP ─── */
+  .type-chip { font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+  .t-hist { background: rgba(43,127,212,.1); color: var(--bsc-dk); }
+  .t-spik { background: var(--g100); color: var(--g500); }
+  .t-task { background: rgba(38,125,38,.08); color: var(--bsf-dk); }
+  .t-other { background: var(--g50); color: var(--g400); }
+
+  /* ─── ASSIGNEE PANEL ─── */
+  .assign-list { display: flex; flex-direction: column; gap: 0; }
+  .assign-row { display: flex; align-items: center; gap: 10px; padding: 9px 16px; border-bottom: 1px solid var(--g100); }
+  .assign-row:last-child { border-bottom: none; }
+  .assign-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--g900); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+  .assign-name { font-size: 12px; font-weight: 600; color: var(--black); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .assign-bar-wrap { width: 80px; background: var(--g100); border-radius: var(--r-full); height: 4px; flex-shrink: 0; overflow: hidden; }
+  .assign-bar { height: 100%; border-radius: var(--r-full); background: var(--bsj); }
+  .assign-count { font-size: 11px; font-weight: 700; color: var(--g600); font-family: var(--mono); width: 20px; text-align: right; flex-shrink: 0; }
+
+  /* ─── DAYS TIMELINE ─── */
+  .timeline-card { background: var(--white); border-radius: var(--r-lg); padding: 20px 24px; border: 1px solid var(--g200); box-shadow: var(--sh-card); }
+  .timeline-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .tl-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--g400); }
+  .tl-dates { display: flex; justify-content: space-between; font-size: 10px; color: var(--g500); font-family: var(--mono); margin-top: 8px; }
+  .day-track { height: 8px; background: var(--g100); border-radius: var(--r-full); overflow: hidden; position: relative; }
+  .day-fill { height: 100%; background: linear-gradient(90deg, var(--black), var(--g700)); border-radius: var(--r-full); }
+  .day-today { position: absolute; top: -3px; height: 14px; width: 2px; background: var(--bsj); border-radius: 1px; }
+  .tl-stat { text-align: center; }
+  .tl-stat-val { font-size: 22px; font-weight: 800; color: var(--black); letter-spacing: -.03em; }
+  .tl-stat-lbl { font-size: 10px; color: var(--g500); font-weight: 500; }
+
+  /* ─── SUMMARY RIBBON ─── */
+  .ribbon { background: var(--g900); border-radius: var(--r-lg); padding: 16px 22px; display: flex; gap: 32px; align-items: center; }
+  .ribbon-item { text-align: center; }
+  .ribbon-val { font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -.03em; }
+  .ribbon-lbl { font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--g500); margin-top: 2px; }
+  .ribbon-div { width: 1px; background: var(--g700); align-self: stretch; }
+
+  /* ─── FOOTER ─── */
+  .ftr { background: var(--black); padding: 18px 48px; display: flex; align-items: center; justify-content: space-between; }
+  .ftr-l { font-size: 12px; color: var(--g500); }
+  .ftr-l strong { color: var(--g300); }
+  .ftr-r { font-family: var(--mono); font-size: 10px; color: var(--g700); letter-spacing: .08em; }
+
+  /* ─── STATUS DOT ─── */
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .dot-done { background: var(--ok); }
+  .dot-prog { background: var(--bsj); }
+  .dot-test { background: var(--info); }
+  .dot-todo { background: var(--g300); }
+
+  .update-time { font-family: var(--mono); font-size: 9px; color: var(--g600); background: rgba(255,255,255,.06); padding: 3px 8px; border-radius: var(--r-full); border: 1px solid rgba(255,255,255,.08); }
+</style>
+</head>
+<body>
+<script>
+(function() {
+  const HASH = "d690597c86eda77739afadffe0cd8b34f4a8069278a829553aac6ba0fc21f9eb";
+  const KEY  = "gp_hbi_auth_v1";
+  async function sha256(msg) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  }
+  function showGate() {
+    document.body.style.overflow = "hidden";
+    const gate = document.createElement("div");
+    gate.id = "auth-gate";
+    gate.innerHTML = `
+      <div style="position:fixed;inset:0;background:#000;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif">
+        <div style="background:#111;border:1px solid #2C2C2C;border-radius:16px;padding:36px 40px;width:100%;max-width:380px;text-align:center">
+          <div style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#000;margin:0 auto 20px">G·P</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#6B6B6B;margin-bottom:6px">Grupo Petersen · Canales Digitales</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px">Sprint Dashboard</div>
+          <div style="font-size:12px;color:#6B6B6B;margin-bottom:24px">Acceso restringido · HBI Plataforma</div>
+          <input id="gate-pw" type="password" placeholder="Contraseña de acceso" autocomplete="current-password"
+            style="width:100%;padding:11px 14px;background:#1A1A1A;border:1px solid #2C2C2C;border-radius:8px;color:#fff;font-size:13px;font-family:inherit;outline:none;margin-bottom:10px">
+          <div id="gate-err" style="font-size:11px;color:#CC1A1A;min-height:16px;margin-bottom:10px"></div>
+          <button id="gate-btn"
+            style="width:100%;padding:11px;background:#F5A800;border:none;border-radius:8px;font-size:13px;font-weight:800;color:#000;cursor:pointer;font-family:inherit;letter-spacing:-.01em">
+            Ingresar
+          </button>
+          <div style="font-size:10px;color:#444;margin-top:16px">Sprint HBI Plataforma · Uso interno</div>
+        </div>
+      </div>
+    \`;
+    document.body.appendChild(gate);
+    const pw  = gate.querySelector("#gate-pw");
+    const btn = gate.querySelector("#gate-btn");
+    const err = gate.querySelector("#gate-err");
+    pw.addEventListener("keydown", e => { if (e.key === "Enter") btn.click(); });
+    btn.addEventListener("click", async () => {
+      btn.textContent = "Verificando…";
+      btn.disabled = true;
+      const h = await sha256(pw.value);
+      if (h === HASH) {
+        sessionStorage.setItem(KEY, HASH);
+        gate.style.opacity = "0";
+        gate.style.transition = "opacity .3s";
+        setTimeout(() => { gate.remove(); document.body.style.overflow = ""; }, 300);
+      } else {
+        err.textContent = "Contraseña incorrecta. Intentá de nuevo.";
+        pw.value = "";
+        pw.focus();
+        btn.textContent = "Ingresar";
+        btn.disabled = false;
+      }
+    });
+    setTimeout(() => pw.focus(), 100);
+  }
+  if (sessionStorage.getItem(KEY) !== HASH) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", showGate);
+    } else {
+      showGate();
+    }
+  }
+})();
+</script>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div style="position:absolute;inset:0;overflow:hidden">
+    <div class="sh sh1"></div><div class="sh sh2"></div><div class="sh sh3"></div><div class="sh sh4"></div><div class="sh sh5"></div>
+  </div>
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-logo">
+        <div class="gp-circle">G·P</div>
+        <div class="gp-word">Grupo Petersen <span>Canales Digitales · HBI Plataforma</span></div>
+      </div>
+      <h1>Sprint Dashboard<br><em>& Evolución del Sprint</em></h1>
+    </div>
+    <div class="hdr-right">
+      <div class="ver-tag">Sprint 25 · v97</div>
+      <div class="hdr-meta">
+        <strong>HBI Plataforma Sprint 25 (v97)</strong><br>
+        19 mar → 08 abr 2026 &nbsp;·&nbsp; 20 días<br>
+        Actualizado: 27/03/2026
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="body">
+
+  <!-- KPIs -->
+  <section>
+    <div class="eyebrow">01 — Estado General</div>
+    <div class="kpi-row">
+      <div class="kpi-card total">
+        <div class="kpi-label">Total Issues</div>
+        <div class="kpi-val">98</div>
+        <div class="kpi-pct">Sprint activo</div>
+      </div>
+      <div class="kpi-card done">
+        <div class="kpi-label">Listo</div>
+        <div class="kpi-val">37</div>
+        <div class="kpi-pct ok"><strong>37.8%</strong> completado</div>
+      </div>
+      <div class="kpi-card test">
+        <div class="kpi-label">En Testing</div>
+        <div class="kpi-val">7</div>
+        <div class="kpi-pct info"><strong>7.1%</strong> del total</div>
+      </div>
+      <div class="kpi-card prog">
+        <div class="kpi-label">En Progreso</div>
+        <div class="kpi-val">32</div>
+        <div class="kpi-pct warn"><strong>32.7%</strong> del total</div>
+      </div>
+      <div class="kpi-card todo">
+        <div class="kpi-label">Por Hacer</div>
+        <div class="kpi-val">22</div>
+        <div class="kpi-pct"><strong>22.4%</strong> del total</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS + TIMELINE -->
+  <section>
+    <div class="eyebrow">02 — Evolución</div>
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:16px">
+
+      <div class="progress-card">
+        <div class="prog-header">
+          <div>
+            <div class="prog-title">Progreso del Sprint</div>
+            <div class="prog-sub">Tickets completados vs. tiempo transcurrido</div>
+          </div>
+          <div style="text-align:right">
+            <div class="prog-pct-big">44.9<span>%</span></div>
+            <div style="font-size:10px;color:var(--g500);margin-top:2px">Done + Testing</div>
+          </div>
+        </div>
+        <!-- Stacked progress: listo / testing / en progreso / todo -->
+        <div class="prog-track">
+          <div class="prog-fill done" style="width:37.8%"></div>
+          <div class="prog-fill test" style="width:7.1%"></div>
+          <div class="prog-fill prog" style="width:32.7%"></div>
+          <div class="prog-fill todo" style="width:22.4%"></div>
+        </div>
+        <div class="prog-legend">
+          <div class="leg"><div class="leg-dot" style="background:var(--ok)"></div>Listo (37)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--info)"></div>En Testing (7)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--bsj)"></div>En Progreso (32)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--g300)"></div>Por Hacer (22)</div>
+        </div>
+
+        <!-- Tiempo -->
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--g100)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="tl-label">Tiempo del Sprint</div>
+            <div style="font-size:11px;color:var(--g500)">Hoy: 27/03/2026</div>
+          </div>
+          <div class="day-track" style="position:relative">
+            <div class="day-fill" style="width:40%"></div>
+            <div class="day-today" style="left:40%"></div>
+          </div>
+          <div class="tl-dates">
+            <span>19 mar</span>
+            <span style="color:var(--bsj);font-weight:600">◆ Hoy (día 8/20 · 40%)</span>
+            <span>08 abr</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-card">
+        <div class="tl-label" style="margin-bottom:16px">Resumen temporal</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="text-align:center;padding:12px;background:var(--g50);border-radius:var(--r-md)">
+            <div class="tl-stat-val">12</div>
+            <div class="tl-stat-lbl">días restantes</div>
+          </div>
+          <div style="text-align:center;padding:12px;background:rgba(26,138,74,.06);border-radius:var(--r-md)">
+            <div class="tl-stat-val" style="color:var(--ok)">37</div>
+            <div class="tl-stat-lbl">tickets cerrados</div>
+          </div>
+          <div style="text-align:center;padding:12px;background:rgba(245,168,0,.08);border-radius:var(--r-md)">
+            <div class="tl-stat-val" style="color:var(--bsj-dk)">61</div>
+            <div class="tl-stat-lbl">tickets activos</div>
+          </div>
+          <div style="font-size:10px;color:var(--g500);text-align:center;line-height:1.6">
+            Regresión y liberación:<br>
+            <strong style="color:var(--black);font-size:12px">01 de abril 2026</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPRINT GOALS -->
+  <section>
+    <div class="eyebrow">03 — Objetivos del Sprint</div>
+    <div class="section-title">Compromisos Sprint 25 (v97) <span>5 objetivos · Liberación 01 abr</span></div>
+    <div class="goals-grid">
+      <div class="goal-item">
+        <div class="goal-num">1</div>
+        <div class="goal-text">
+          <strong>Valida en VU Fraud</strong>
+          Integrar Valida en la invocación de reglas de VU Fraud para mejorar la detección de fraude.
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-num">2</div>
+        <div class="goal-text">
+          <strong>Feedback Qualtrics</strong>
+          Recopilar feedback de usuarios sobre su experiencia en MB Android/iOS con Qualtrics App Review.
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-num">3</div>
+        <div class="goal-text">
+          <strong>SDK Visa 5.6</strong>
+          Actualizar la SDK Visa a versión 5.6 para solucionar el paginado de 16k en G Pay y Apple Wallet.
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-num">4</div>
+        <div class="goal-text">
+          <strong>Validación de dispositivos</strong>
+          Facilitar la validación de dispositivos de confianza incorporando criterio de orden descendente por estado y fecha.
+        </div>
+      </div>
+      <div class="goal-item" style="grid-column:1/-1">
+        <div class="goal-num">5</div>
+        <div class="goal-text">
+          <strong>Mail instructivo ATM desde BO</strong>
+          Permitir actualizar el contenido del mail de instrucciones de Clave ATM a través del Back Office, sin intervención técnica.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ISSUES TABLE + ASSIGNEES -->
+  <section>
+    <div class="eyebrow">04 — Historias & Spikes</div>
+    <div class="section-title">Detalle de Issues principales <span>Excluye subtareas (71)</span></div>
+    <div class="two-col">
+
+      <div class="table-card">
+        <div class="table-hdr">
+          <span class="table-hdr-t">Issues del Sprint · Historias, Spikes & Tareas</span>
+          <span class="update-time">27/03/2026</span>
+        </div>
+        <table class="ds-table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Issue</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Responsable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- HISTORIAS EN PROGRESO -->
+            <tr>
+              <td>HBI-3638</td>
+              <td><div class="issue-sum">Integrar Valida en VU Fraud<small>Invocación de reglas de VU Fraud · Objetivo #1</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>K. Aguirre</td>
+            </tr>
+            <tr>
+              <td>HBI-6134</td>
+              <td><div class="issue-sum">App Review Qualtrics — SDK Android/iOS<small>Actualización SDK · Objetivo #2</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <tr>
+              <td>HBI-2137</td>
+              <td><div class="issue-sum">SDK Visa 5.6.01 — G Pay y Apple Wallet<small>Solución paginado 16k · Objetivo #3</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <tr>
+              <td>HBI-6275</td>
+              <td><div class="issue-sum">Dispositivos de confianza ordenados<small>Orden descendente por estado y fecha · Objetivo #4</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <tr>
+              <td>HBI-6319</td>
+              <td><div class="issue-sum">Editar mail instrucciones ATM desde BO<small>Actualización de contenido sin deploy · Objetivo #5</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>S. Roldan</td>
+            </tr>
+            <tr>
+              <td>HBI-5519</td>
+              <td><div class="issue-sum">WhatsApp como canal de contacto en HB<small>Reemplaza chat "La Mano" en Individuos</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>F. Abbattista</td>
+            </tr>
+            <tr>
+              <td>HBI-3097</td>
+              <td><div class="issue-sum">Mejorar consulta de Códigos postales (Parte 2)<small>Tablas de parametría del core</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <tr>
+              <td>HBI-4003</td>
+              <td><div class="issue-sum">Consultar usuarios por CUIT/CUIL en BO<small>Back Office · Búsqueda por tipo de documento</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>F. Abbattista</td>
+            </tr>
+            <tr>
+              <td>HBI-4724</td>
+              <td><div class="issue-sum">Cambios en título operación/apertura comitente<small>Visualización y UX</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>F. Abbattista</td>
+            </tr>
+            <tr>
+              <td>HBI-5591</td>
+              <td><div class="issue-sum">Botón "Ir a mi perfil" en negro — BSJ<small>Ajuste visual Homebanking BSJ</small></div></td>
+              <td><span class="type-chip t-hist">Historia</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <!-- SPIKES EN PROGRESO -->
+            <tr>
+              <td>HBI-5936</td>
+              <td><div class="issue-sum">SDK Adobe Journey Optimizer<small>Implementación e investigación</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>J. Benitez Pizarro</td>
+            </tr>
+            <tr>
+              <td>HBI-6199</td>
+              <td><div class="issue-sum">Impacto permisos nuevos para integrar Valida<small>Análisis de impacto</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>K. Aguirre</td>
+            </tr>
+            <tr>
+              <td>HBI-6490</td>
+              <td><div class="issue-sum">Consulta tablas transaccionales — Reportería RU<small>Análisis de datos</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <tr>
+              <td>HBI-6480</td>
+              <td><div class="issue-sum">NFC · Silent Push — Revisión integración Cordova<small>Reunión técnica</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>L. Bermeo</td>
+            </tr>
+            <tr>
+              <td>HBI-6484</td>
+              <td><div class="issue-sum">Documentación MODO 3.27.0<small>Análisis nueva versión</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>L. Bermeo</td>
+            </tr>
+            <!-- SPIKES LISTO -->
+            <tr>
+              <td>HBI-6377</td>
+              <td><div class="issue-sum">Investigar solución UX CAM para homebanking<small>✓ Completado</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-done"><span class="dot dot-done"></span>Listo</span></td>
+              <td>F. Abbattista</td>
+            </tr>
+            <tr>
+              <td>HBI-6339</td>
+              <td><div class="issue-sum">Ajuste tiempos sesión inactiva — Empresas<small>✓ Investigación completada</small></div></td>
+              <td><span class="type-chip t-spik">Spike</span></td>
+              <td><span class="badge b-done"><span class="dot dot-done"></span>Listo</span></td>
+              <td>S. Roldan</td>
+            </tr>
+            <!-- TAREAS -->
+            <tr>
+              <td>HBI-6521</td>
+              <td><div class="issue-sum">Tareas Nodo SP24+SP25<small>Gestión y coordinación</small></div></td>
+              <td><span class="type-chip t-task">Tarea</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>C. Torres Pardo</td>
+            </tr>
+            <tr>
+              <td>HBI-6632</td>
+              <td><div class="issue-sum">Reuniones de Equipo Plataforma SP25<small>Ceremonias ágiles</small></div></td>
+              <td><span class="type-chip t-other">Reunion</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>N. Pirsztuk</td>
+            </tr>
+            <tr>
+              <td>HBI-6639</td>
+              <td><div class="issue-sum">Regresión 97 — Plataforma SP25<small>Pruebas de regresión · Fecha: 01 abr</small></div></td>
+              <td><span class="type-chip t-other">Regresión</span></td>
+              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
+              <td>C. Torres Pardo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ASSIGNEES -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="table-card">
+          <div class="table-hdr">
+            <span class="table-hdr-t">Issues por Responsable</span>
+            <span class="update-time">Total incl. subtareas</span>
+          </div>
+          <div class="assign-list">
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#1A5FA0">NP</div>
+              <div class="assign-name">Nicolas Pirsztuk</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:100%"></div></div>
+              <div class="assign-count">17</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#267D26">CT</div>
+              <div class="assign-name">Constanza Torres Pardo</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:88%"></div></div>
+              <div class="assign-count">15</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#2C2C2C">JB</div>
+              <div class="assign-name">Joyce Benitez Pizarro</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:70%"></div></div>
+              <div class="assign-count">12</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#444">—</div>
+              <div class="assign-name">Sin asignar</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:82%;background:var(--g300)"></div></div>
+              <div class="assign-count">14</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#C98A00">FA</div>
+              <div class="assign-name">Francisco Abbattista</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:35%"></div></div>
+              <div class="assign-count">6</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#991212">CM</div>
+              <div class="assign-name">Carolina Meccico</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:29%"></div></div>
+              <div class="assign-count">5</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#1A5A1A">KA</div>
+              <div class="assign-name">Karla Aguirre</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
+              <div class="assign-count">3</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#2C2C2C">MR</div>
+              <div class="assign-name">M. Ayelen Roccell</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
+              <div class="assign-count">3</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#1A5FA0">LB</div>
+              <div class="assign-name">Luis Bermeo</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
+              <div class="assign-count">3</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#444">CA</div>
+              <div class="assign-name">Celeste Aguero</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
+              <div class="assign-count">3</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#267D26">SR</div>
+              <div class="assign-name">Sabrina Roldan</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:12%"></div></div>
+              <div class="assign-count">2</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#2C2C2C">DA</div>
+              <div class="assign-name">Dex Avegliano</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:12%"></div></div>
+              <div class="assign-count">2</div>
+            </div>
+            <div class="assign-row">
+              <div class="assign-avatar" style="background:#444">+5</div>
+              <div class="assign-name" style="color:var(--g500)">Otros (5 personas)</div>
+              <div class="assign-bar-wrap"><div class="assign-bar" style="width:35%;background:var(--g200)"></div></div>
+              <div class="assign-count" style="color:var(--g400)">6</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Distribución por tipo -->
+        <div class="table-card">
+          <div class="table-hdr">
+            <span class="table-hdr-t">Distribución por Tipo</span>
+          </div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
+                <span>Subtareas</span><span style="color:var(--g500);font-family:var(--mono)">71 · 72.4%</span>
+              </div>
+              <div class="prog-track" style="height:6px">
+                <div class="prog-fill" style="width:72.4%;background:var(--g300)"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
+                <span>Historias</span><span style="color:var(--bsc-dk);font-family:var(--mono)">12 · 12.2%</span>
+              </div>
+              <div class="prog-track" style="height:6px">
+                <div class="prog-fill" style="width:12.2%;background:var(--bsc)"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
+                <span>Spikes</span><span style="color:var(--g500);font-family:var(--mono)">11 · 11.2%</span>
+              </div>
+              <div class="prog-track" style="height:6px">
+                <div class="prog-fill" style="width:11.2%;background:var(--g500)"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
+                <span>Otros (Tareas, Ceremonias, Regresión)</span><span style="color:var(--g400);font-family:var(--mono)">4 · 4.1%</span>
+              </div>
+              <div class="prog-track" style="height:6px">
+                <div class="prog-fill" style="width:4.1%;background:var(--bsj)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="ftr">
+  <div class="ftr-l"><strong>Grupo Petersen · Canales Digitales</strong> — HBI Plataforma Sprint 25 (v97) · Dashboard interno</div>
+  <div class="ftr-r">GENERADO 27/03/2026 · JIRA rapidView=650 sprint=1957</div>
+</footer>
+
+</body>
+</html>
