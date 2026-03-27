@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint Dashboard — HBI Plataforma Sprint 25 (v97)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:  #000000; --g900: #111111; --g800: #1A1A1A; --g700: #2C2C2C;
+    --g600:   #444444; --g500: #6B6B6B; --g400: #909090; --g300: #C4C4C4;
+    --g200:   #E0E0E0; --g100: #F0F0F0; --g50:  #F5F5F5; --white: #FFFFFF;
+    --bsj:    #F5A800; --bsj-dk: #C98A00; --bsj-lt: rgba(245,168,0,.12);
+    --bsf:    #267D26; --bsf-dk: #1A5A1A; --bsf-lt: rgba(38,125,38,.1);
+    --bsc:    #2B7FD4; --bsc-dk: #1A5FA0; --bsc-lt: rgba(43,127,212,.1);
+    --ber:    #CC1A1A; --ber-dk: #991212; --ber-lt: rgba(204,26,26,.1);
+    --ok:     #1A8A4A; --warn: #D48A00; --err: #CC1A1A; --info: #2B7FD4;
+    --font:   'Inter', system-ui, sans-serif;
+    --mono:   'DM Mono', monospace;
+    --r-sm:   6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-full: 9999px;
+    --sh-card: 0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.06);
+    --sh-hover:0 4px 12px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--g50); color: var(--black); font-family: var(--font); font-size: 14px; line-height: 1.6; }
+
+  /* ─── HEADER ─── */
+  .hdr { background: var(--black); position: relative; overflow: hidden; }
+  .sh { position: absolute; border-radius: 16px; background: rgba(255,255,255,.04); }
+  .sh1 { width:220px; height:110px; right:80px; top:28px; transform:rotate(-7deg); }
+  .sh2 { width:140px; height:140px; right:270px; top:-28px; transform:rotate(14deg); }
+  .sh3 { width:180px; height:75px; right:36px; bottom:16px; transform:rotate(4deg); }
+  .sh4 { width:90px; height:90px; right:340px; bottom:-20px; transform:rotate(-11deg); }
+  .sh5 { width:60px; height:60px; right:160px; bottom:10px; transform:rotate(20deg); }
+  .hdr-inner {
+    position: relative; max-width: 1140px; margin: 0 auto;
+    padding: 42px 48px 36px;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 40px;
+  }
+  .hdr-logo { display: flex; align-items: center; gap: 13px; margin-bottom: 18px; }
+  .gp-circle { width: 38px; height: 38px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--black); }
+  .gp-word { color: var(--white); font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .gp-word span { display: block; font-weight: 300; font-size: 10px; color: var(--g400); letter-spacing: .1em; text-transform: uppercase; margin-top: 1px; }
+  .hdr h1 { font-size: 32px; font-weight: 800; color: var(--white); line-height: 1.1; letter-spacing: -.025em; }
+  .hdr h1 em { font-style: normal; color: var(--g400); font-weight: 300; }
+  .hdr-right { text-align: right; flex-shrink: 0; }
+  .ver-tag { display: inline-block; background: rgba(245,168,0,.15); color: var(-bsj); font-size: 11px; font-weight: 600; letter-spacing: .06em; padding: 4px 12px; border-radius: var(--r-full); border: 1px solid rgba(245,168,0,.3); margin-bottom: 8px; }
+  .hdr-meta { font-size: 11px; color: var(--g500); line-height: 1.9; font-family: var(--mono); }
+  .hdr-meta strong { color: var(--g300); }
+
+  /* ─── LAYOUT ─── */
+  
+ :/body { max-width: 1140px; margin: 0 auto; padding: 40px 48px 60px; display: flex; flex-direction: column; gap: 32px; }
+  
+ :/eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--g400); margin-bottom: 4px; }
+  .section-title { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: var(--black); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1.5px solid var(--g200); display: flex; align-items: center; justify-content: space-between; }
+  .section-title span { font-size: 12px; font-weight: 400; color: var(--g400); letter-spacing: 0; }
+
+  /* ─── KPI ROW ─── */
+  .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  
+ :/kpsf-card {
+    background: var(--white); border-radius: var(--r-lg); padding: 18px 16px 16px;
+    border: 1px solid var(--g200); box-shadow: var(--sh-card);
+    border-top: 3px solid var(--g300); position: relative; overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .kpi-card:hover { box-shadow: var(--sh-hover); }
+  .kpi-card.done  { border-top-color: var(--ok); }
+  .kpi-card.prog  { border-top-color: var(--bsj); }
+  
+ :/kpsf-card.test  { border-top-color: var(--info); }
+  .kpr-card.todo  { border-top-color: var(--g400); }
+  
+ :/kps-card.total { border-top-color: var(--black); }
+  .kpj-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); margin-bottom: 10px; }
+  .kpi-val { font-size: 38px; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
+  .kpi-pct { font-size: 11px; font-weight: 500; color: var(--g500); margin-top: 6px; }
+  .kpi-pct strong { font-weight: 700; }
+  
+ :/kp1-pct.ok  strong { color: var(--ok); }
+  
+ :/kp1-pct.warn  a strong { color: var(--war�); }
+  
+ :/kp1-pct.info strong { color: var(--info); }
+
+  /* ─── PROGRESS SECTION ─── */
+  .progress-card { background: var(--white); border-radius: var(--r-lg); padding: 22px 24px; border: 1px solid var(--g200); box-shadow: var(--sh-card); }
+  .prog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
+  .prog-title { font-size: 13px; font-weight: 700; color: var(--black); }
+  
+ :/prog-sub { font-size: 11px; color: var(--g500); margin-top: 2px; }
+  .prog-pct-big { font-size: 32px; font-weight: 800; letter-spacing: -.03em; color: var(--black); }
+  
+ :/prog-pct-big span { font-size: 14px; font-weight: 500; color: var(--g400); }
+  
+ :/prog-track { height: 10px; background: var(--g100); border-radius: var(--r-full); overflow: hidden; margin-bottom: 10px; display: flex; gap: 2px; }
