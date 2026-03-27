@@ -503,46 +503,110 @@ def generate_release_note(sprint: dict, data: dict, days: dict) -> str:
     total  = data["total"]
     generated = datetime.datetime.now().strftime("%d/%m/%Y")
 
-    # Feature list: stories only
-    stories = [i for i in data["issues"] if i["type"] == "Historia"]
+    import re
+
+    def clean_summary(s):
+        """Transforma el formato 'Quiero X para Y' en un título legible para release note."""
+        s = s.strip()
+        # Eliminar prefijo tipo "(Parte 2) - " preservando el resto
+        prefix_match = re.match(r'^(\([^)]+\)\s*[-–]\s*)', s)
+        prefix = prefix_match.group(1) if prefix_match else ""
+        body = s[len(prefix):]
+        # Eliminar "Como X quiero "
+        body = re.sub(r'^Como\s+.{1,50}?\s+quiero\s+', '', body, flags=re.IGNORECASE)
+        # Eliminar "Quiero "
+        body = re.sub(r'^[Qq]uiero\s+', '', body)
+        # Eliminar cláusula " para que..." al final
+        body = re.sub(r'\s+para\s+(que\s+)?.{0,60}$', '', body, flags=re.IGNORECASE)
+        # Capitalizar primera letra
+        if body:
+            body = body[0].upper() + body[1:]
+        return (prefix + body)[:90]
+
+    def parse_goals(goal_text):
+        """Extrae objetivos reales del campo goal del sprint, filtrando líneas de encabezado."""
+        real_goals = []
+        for line in goal_text.split("\n"):
+            line = line.strip()
+            if not line or len(line) < 5:
+                continue
+            # Saltar líneas de encabezado (ej. "Objetivos del sprint:")
+            if re.match(r'^objetivo', line, re.IGNORECASE) and len(line) < 40:
+                continue
+            if line.endswith(":") and len(line) < 50:
+                continue
+            # Eliminar prefijo numérico "1- " o "1. "
+            line = re.sub(r"^\d+[-\.\)]\s*", "", line)
+            real_goals.append(line)
+        return real_goals
+
+    # Feature list: historias ordenadas por prioridad de estado
+    STATUS_PRIO = {"listo": 0, "done": 0, "testing": 1, "test": 1,
+                   "progreso": 2, "progress": 2, "hacer": 3, "do": 3, "open": 3}
+
+    def status_priority(iss):
+        s = iss["status"].lower()
+        for k, v in STATUS_PRIO.items():
+            if k in s:
+                return v
+        return 4
+
+    all_stories = [i for i in data["issues"] if i["type"] == "Historia"]
+    stories = sorted(all_stories, key=status_priority)
+
     features_html = ""
-    icons = {"Historia": "📋", "Spike": "🔬", "Tarea": "✅"}
     tags = {
-        "valida": ("Seguridad &amp; Fraude", "security"),
-        "qualtrics": ("Mobile · Feedback", "mobile"),
-        "visa": ("Mobile · Fintech", "mobile"),
-        "dispositivo": ("UX · Seguridad", "ux"),
-        "mail": ("Back Office", "backoffice"),
-        "whatsapp": ("Canal Digital", "integration"),
-        "cuit": ("Back Office", "backoffice"),
-        "bo": ("Back Office", "backoffice"),
+        "valida": ("Seguridad &amp; Fraude", "security", "🔐"),
+        "fraude": ("Seguridad &amp; Fraude", "security", "🔐"),
+        "qualtrics": ("Mobile · Feedback", "mobile", "📱"),
+        "android": ("Mobile · Android", "mobile", "📱"),
+        "ios": ("Mobile · iOS", "mobile", "📱"),
+        "homebanking": ("Canal Digital", "integration", "🏦"),
+        "visa": ("Mobile · Fintech", "mobile", "💳"),
+        "sdk": ("Mobile · Fintech", "mobile", "💳"),
+        "dispositivo": ("UX · Seguridad", "ux", "🔑"),
+        "clave": ("UX · Seguridad", "ux", "🔑"),
+        "mail": ("Back Office", "backoffice", "📧"),
+        "instructivo": ("Back Office", "backoffice", "📧"),
+        "whatsapp": ("Canal Digital", "integration", "💬"),
+        "cuit": ("Back Office", "backoffice", "🔍"),
+        "cuil": ("Back Office", "backoffice", "🔍"),
+        "bo": ("Back Office", "backoffice", "🖥️"),
+        "back office": ("Back Office", "backoffice", "🖥️"),
+        "codigo postal": ("Back Office", "backoffice", "📍"),
+        "postal": ("Back Office", "backoffice", "📍"),
+        "modo": ("Canal Digital", "integration", "📲"),
+        "atm": ("Back Office", "backoffice", "🏧"),
+        "fci": ("Finanzas", "ux", "📈"),
+        "cuenta": ("Core Banking", "backoffice", "🏦"),
     }
+    type_icons = {"Historia": "📋", "Spike": "🔬", "Tarea": "✅"}
+    tag_icons_map = {"security": "🔐", "mobile": "📱", "backoffice": "🖥️",
+                     "integration": "💬", "ux": "🎨"}
+
     for iss in stories[:8]:
         summary = iss["summary"]
-        icon = "📋"
-        tag_label, tag_class = "Funcionalidad", "integration"
-        for kw, (lbl, cls) in tags.items():
-            if kw.lower() in summary.lower():
-                tag_label, tag_class = lbl, cls
+        title = clean_summary(summary)
+        tag_label, tag_class, icon = "Funcionalidad", "integration", type_icons.get(iss["type"], "📋")
+        sumlow = summary.lower()
+        for kw, (lbl, cls, ico) in tags.items():
+            if kw.lower() in sumlow:
+                tag_label, tag_class, icon = lbl, cls, ico
                 break
         features_html += f"""
           <div class="feature-item">
             <div class="feat-icon">{icon}</div>
             <div class="feat-body">
               <div class="feat-tag {tag_class}">{tag_label}</div>
-              <div class="feat-title">{summary[:80]}</div>
+              <div class="feat-title">{title}</div>
               <div class="feat-ticket">{iss["key"]}</div>
             </div>
           </div>"""
 
-    # Goals
+    # Goals — usando parser limpio
+    real_goals = parse_goals(sprint_goal)
     goals_html = ""
-    import re
-    for idx, line in enumerate(sprint_goal.split("\n"), 1):
-        line = line.strip()
-        if not line:
-            continue
-        line = re.sub(r"^\d+[-\.]\s*", "", line)
+    for idx, line in enumerate(real_goals, 1):
         goals_html += f"""
           <div class="goal-card">
             <div class="goal-num">OBJ {idx:02d}</div>
@@ -650,9 +714,9 @@ def generate_release_note(sprint: dict, data: dict, days: dict) -> str:
       <div class="hdr-title">Novedades de la versión</div>
       <div class="hdr-subtitle">Actualización de avances al {generated}</div>
       <div class="hdr-meta">
-        <div class="hdr-meta-item"><div class="hdr-meta-val">{len([l for l in sprint_goal.split(chr(10)) if l.strip()])}</div><div class="hdr-meta-lbl">Objetivos</div></div>
+        <div class="hdr-meta-item"><div class="hdr-meta-val">{len(real_goals)}</div><div class="hdr-meta-lbl">Objetivos</div></div>
         <div class="hdr-meta-div"></div>
-        <div class="hdr-meta-item"><div class="hdr-meta-val">{len(stories)}</div><div class="hdr-meta-lbl">Historias</div></div>
+        <div class="hdr-meta-item"><div class="hdr-meta-val">{len(all_stories)}</div><div class="hdr-meta-lbl">Historias</div></div>
         <div class="hdr-meta-div"></div>
         <div class="hdr-meta-item"><div class="hdr-meta-val">{pcts["listo"]}%</div><div class="hdr-meta-lbl">Completado</div></div>
         <div class="hdr-meta-div"></div>
@@ -751,18 +815,26 @@ def main():
 
     print(f"[INFO] Estado: {data['counts']}")
 
-    # Generate files
+    # Generate HTML
+    dashboard_html = generate_dashboard(sprint, data, days)
+    release_html   = generate_release_note(sprint, data, days)
+
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
 
-    dashboard_path = out / "sprint-dashboard.html"
-    release_path   = out / "release-note-email.html"
+    # ── Archivos raíz (siempre apuntan al sprint más reciente) ──
+    (out / "sprint-dashboard.html").write_text(dashboard_html, encoding="utf-8")
+    (out / "release-note-email.html").write_text(release_html, encoding="utf-8")
+    print(f"[OK] Latest dashboard    → sprint-dashboard.html")
+    print(f"[OK] Latest release note → release-note-email.html")
 
-    dashboard_path.write_text(generate_dashboard(sprint, data, days), encoding="utf-8")
-    release_path.write_text(generate_release_note(sprint, data, days), encoding="utf-8")
-
-    print(f"[OK] Dashboard    → {dashboard_path}")
-    print(f"[OK] Release Note → {release_path}")
+    # ── Archivos versionados por sprint: sprints/{id}/ ──
+    sprint_dir = out / "sprints" / str(sprint["id"])
+    sprint_dir.mkdir(parents=True, exist_ok=True)
+    (sprint_dir / "dashboard.html").write_text(dashboard_html, encoding="utf-8")
+    (sprint_dir / "release-note.html").write_text(release_html, encoding="utf-8")
+    print(f"[OK] Versioned dashboard  → sprints/{sprint['id']}/dashboard.html")
+    print(f"[OK] Versioned note       → sprints/{sprint['id']}/release-note.html")
 
 
 if __name__ == "__main__":

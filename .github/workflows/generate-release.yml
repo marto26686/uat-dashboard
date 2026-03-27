@@ -64,24 +64,28 @@ jobs:
 
       - name: Verificar archivos generados
         run: |
-          echo "=== Archivos generados ==="
+          echo "=== Archivos raíz ==="
           ls -lh sprint-dashboard.html release-note-email.html
-          echo "=== Sprint Dashboard: primeras líneas ==="
-          head -5 sprint-dashboard.html
+          echo "=== Archivos versionados por sprint ==="
+          find sprints/ -name "*.html" 2>/dev/null | sort || echo "(no hay versiones previas)"
 
       - name: Commit y push de los dashboards
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+          # Agregar archivos raíz Y carpeta versionada
           git add sprint-dashboard.html release-note-email.html
+          git add sprints/ 2>/dev/null || true
 
           # Solo commitear si hay cambios
           if git diff --staged --quiet; then
             echo "Sin cambios en los dashboards."
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            git commit -m "🚀 Dashboard actualizado — $TIMESTAMP"
+            SPRINT_LABEL="${{ inputs.sprint_id }}"
+            [ -z "$SPRINT_LABEL" ] && SPRINT_LABEL="activo"
+            git commit -m "🚀 Dashboard actualizado — Sprint $SPRINT_LABEL — $TIMESTAMP"
             git push
             echo "✅ Push exitoso"
           fi
@@ -92,14 +96,17 @@ jobs:
           echo "### Resultado de la generación" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f sprint-dashboard.html ]; then
-            echo "✅ **sprint-dashboard.html** generado correctamente" >> $GITHUB_STEP_SUMMARY
+            echo "✅ **sprint-dashboard.html** (latest) generado correctamente" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ **sprint-dashboard.html** NO fue generado" >> $GITHUB_STEP_SUMMARY
           fi
           if [ -f release-note-email.html ]; then
-            echo "✅ **release-note-email.html** generado correctamente" >> $GITHUB_STEP_SUMMARY
+            echo "✅ **release-note-email.html** (latest) generado correctamente" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ **release-note-email.html** NO fue generado" >> $GITHUB_STEP_SUMMARY
           fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### Versiones archivadas" >> $GITHUB_STEP_SUMMARY
+          find sprints/ -name "*.html" 2>/dev/null | sort | sed 's/^/- `/' | sed 's/$/'\''\`/' >> $GITHUB_STEP_SUMMARY || true
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🕐 Ejecutado: $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
