@@ -1,0 +1,34 @@
+{
+  "HBI-5728": {
+    "title": "Configuración de atributos del iframe de Valida",
+    "description": "El equipo de negocio podrá personalizar atributos del componente genérico del iframe de Valida, ganando flexibilidad en la configuración de flujos de validación de identidad sin intervención técnica."
+  },
+  "HBI-4242": {
+    "title": "Validación diferenciada para clientes en proceso de migración",
+    "description": "Implementación de lógica específica para validar clientes cuya migración está pendiente, garantizando una experiencia continua y sin interrupciones durante la transición."
+  },
+  "HBI-3492": {
+    "title": "Valida integrado en la validación de dispositivo desconocido en Login",
+    "description": "Incorporación de Valida en el flujo de autenticación para dispositivos no reconocidos, reforzando la seguridad en accesos desde equipos nuevos sin fricciones adicionales para el usuario."
+  },
+  "HBI-6709": {
+    "title": "Deeplinks desde mensajería push hacia secciones de la app",
+    "description": "Investigación sobre la implementación de deeplinks en notificaciones push que permitan dirigir al usuario directamente a una sección específica de la aplicación."
+  },
+  "HBI-3548": {
+    "title": "Corrección: superposición del footer en dashboard de FCI",
+    "description": "Solución al solapamiento visual entre el footer de tenencia total y los filtros del dashboard de Fondos Comunes de Inversión en Android e iOS."
+  },
+  "HBI-3555": {
+    "title": "Corrección: ícono faltante en el componente Alert Information",
+    "description": "Restablecimiento del ícono del componente Alert Information de tipo informativo (azul) que no se visualizaba correctamente en Web y Mobile para todos los bancos."
+  },
+  "HBI-6501": {
+    "title": "Corrección: pantalla de error al ingresar con usuario y contraseña en iOS",
+    "description": "Solución al error crítico que impedía el acceso mediante usuario y contraseña en dispositivos iOS, mostrando una pantalla de error inesperado al intentar el login."
+  },
+  "HBI-6693": {
+    "title": "Corrección: tags no visibles en Back Office de Valida y Cyberbank",
+    "description": "Solución al problema de visualización de etiquetas en el Back Office de Valida y Cyberbank para BSF, asegurando la correcta operación del equipo de soporte."
+  }
+}
