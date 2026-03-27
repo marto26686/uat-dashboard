@@ -934,7 +934,7 @@ def main():
     enriched = {}
     if api_key:
         print("[INFO] ANTHROPIC_API_KEY detectada — enriqueciendo con Claude AI…")
-        enriched = enrich_with_claude(issues, sprint["name"], api_key)
+        enriched = enrich_with_claude(data["issues"], sprint["name"], api_key)
     else:
         print("[INFO] Sin ANTHROPIC_API_KEY — usando títulos originales de Jira")
 
