@@ -3,191 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sprint Dashboard — HBI Plataforma Sprint 25 (v97)</title>
+<title>Sprint Dashboard — Feature v96.1</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --black:  #000000; --g900: #111111; --g800: #1A1A1A; --g700: #2C2C2C;
-    --g600:   #444444; --g500: #6B6B6B; --g400: #909090; --g300: #C4C4C4;
-    --g200:   #E0E0E0; --g100: #F0F0F0; --g50:  #F5F5F5; --white: #FFFFFF;
-    --bsj:    #F5A800; --bsj-dk: #C98A00; --bsj-lt: rgba(245,168,0,.12);
-    --bsf:    #267D26; --bsf-dk: #1A5A1A; --bsf-lt: rgba(38,125,38,.1);
-    --bsc:    #2B7FD4; --bsc-dk: #1A5FA0; --bsc-lt: rgba(43,127,212,.1);
-    --ber:    #CC1A1A; --ber-dk: #991212; --ber-lt: rgba(204,26,26,.1);
-    --ok:     #1A8A4A; --warn: #D48A00; --err: #CC1A1A; --info: #2B7FD4;
-    --font:   'Inter', system-ui, sans-serif;
-    --mono:   'DM Mono', monospace;
-    --r-sm:   6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-full: 9999px;
-    --sh-card: 0 1px 3px rgba(0,0,0,.05), 0 4px 14px rgba(0,0,0,.06);
-    --sh-hover:0 4px 12px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.08);
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--g50); color: var(--black); font-family: var(--font); font-size: 14px; line-height: 1.6; }
 
-  /* ─── HEADER ─── */
-  .hdr { background: var(--black); position: relative; overflow: hidden; }
-  .sh { position: absolute; border-radius: 16px; background: rgba(255,255,255,.04); }
-  .sh1 { width:220px; height:110px; right:80px; top:28px; transform:rotate(-7deg); }
-  .sh2 { width:140px; height:140px; right:270px; top:-28px; transform:rotate(14deg); }
-  .sh3 { width:180px; height:75px; right:36px; bottom:16px; transform:rotate(4deg); }
-  .sh4 { width:90px; height:90px; right:340px; bottom:-20px; transform:rotate(-11deg); }
-  .sh5 { width:60px; height:60px; right:160px; bottom:10px; transform:rotate(20deg); }
-  .hdr-inner {
-    position: relative; max-width: 1140px; margin: 0 auto;
-    padding: 42px 48px 36px;
-    display: flex; justify-content: space-between; align-items: flex-end; gap: 40px;
-  }
-  .hdr-logo { display: flex; align-items: center; gap: 13px; margin-bottom: 18px; }
-  .gp-circle { width: 38px; height: 38px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--black); }
-  .gp-word { color: var(--white); font-size: 13px; font-weight: 600; line-height: 1.3; }
-  .gp-word span { display: block; font-weight: 300; font-size: 10px; color: var(--g400); letter-spacing: .1em; text-transform: uppercase; margin-top: 1px; }
-  .hdr h1 { font-size: 32px; font-weight: 800; color: var(--white); line-height: 1.1; letter-spacing: -.025em; }
-  .hdr h1 em { font-style: normal; color: var(--g400); font-weight: 300; }
-  .hdr-right { text-align: right; flex-shrink: 0; }
-  .ver-tag { display: inline-block; background: rgba(245,168,0,.15); color: var(--bsj); font-size: 11px; font-weight: 600; letter-spacing: .06em; padding: 4px 12px; border-radius: var(--r-full); border: 1px solid rgba(245,168,0,.3); margin-bottom: 8px; }
-  .hdr-meta { font-size: 11px; color: var(--g500); line-height: 1.9; font-family: var(--mono); }
-  .hdr-meta strong { color: var(--g300); }
-
-  /* ─── LAYOUT ─── */
-  .body { max-width: 1140px; margin: 0 auto; padding: 40px 48px 60px; display: flex; flex-direction: column; gap: 32px; }
-  .eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--g400); margin-bottom: 4px; }
-  .section-title { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: var(--black); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1.5px solid var(--g200); display: flex; align-items: center; justify-content: space-between; }
-  .section-title span { font-size: 12px; font-weight: 400; color: var(--g400); letter-spacing: 0; }
-
-  /* ─── KPI ROW ─── */
-  .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-  .kpi-card {
-    background: var(--white); border-radius: var(--r-lg); padding: 18px 16px 16px;
-    border: 1px solid var(--g200); box-shadow: var(--sh-card);
-    border-top: 3px solid var(--g300); position: relative; overflow: hidden;
-    transition: box-shadow .2s;
-  }
-  .kpi-card:hover { box-shadow: var(--sh-hover); }
-  .kpi-card.done  { border-top-color: var(--ok); }
-  .kpi-card.prog  { border-top-color: var(--bsj); }
-  .kpi-card.test  { border-top-color: var(--info); }
-  .kpi-card.todo  { border-top-color: var(--g400); }
-  .kpi-card.total { border-top-color: var(--black); }
-  .kpi-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); margin-bottom: 10px; }
-  .kpi-val { font-size: 38px; font-weight: 800; letter-spacing: -.04em; color: var(--black); line-height: 1; }
-  .kpi-pct { font-size: 11px; font-weight: 500; color: var(--g500); margin-top: 6px; }
-  .kpi-pct strong { font-weight: 700; }
-  .kpi-pct.ok   strong { color: var(--ok); }
-  .kpi-pct.warn strong { color: var(--warn); }
-  .kpi-pct.info strong { color: var(--info); }
-
-  /* ─── PROGRESS SECTION ─── */
-  .progress-card { background: var(--white); border-radius: var(--r-lg); padding: 22px 24px; border: 1px solid var(--g200); box-shadow: var(--sh-card); }
-  .prog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
-  .prog-title { font-size: 13px; font-weight: 700; color: var(--black); }
-  .prog-sub { font-size: 11px; color: var(--g500); margin-top: 2px; }
-  .prog-pct-big { font-size: 32px; font-weight: 800; letter-spacing: -.03em; color: var(--black); }
-  .prog-pct-big span { font-size: 14px; font-weight: 500; color: var(--g400); }
-  .prog-track { height: 10px; background: var(--g100); border-radius: var(--r-full); overflow: hidden; margin-bottom: 10px; display: flex; gap: 2px; }
-  .prog-fill { height: 100%; border-radius: var(--r-full); transition: width .5s; }
-  .prog-fill.done { background: var(--ok); }
-  .prog-fill.test { background: var(--info); }
-  .prog-fill.prog { background: var(--bsj); }
-  .prog-fill.todo { background: var(--g200); }
-  .prog-legend { display: flex; gap: 18px; flex-wrap: wrap; }
-  .leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--g600); }
-  .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-  /* ─── SPRINT GOALS ─── */
-  .goals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .goal-item { background: var(--white); border-radius: var(--r-md); padding: 14px 16px; border: 1px solid var(--g200); box-shadow: var(--sh-card); display: flex; gap: 12px; align-items: flex-start; }
-  .goal-num { width: 24px; height: 24px; border-radius: 50%; background: var(--g900); color: var(--white); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .goal-text { font-size: 12px; color: var(--g700); line-height: 1.5; }
-  .goal-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 2px; }
-
-  /* ─── TWO COL LAYOUT ─── */
-  .two-col { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
-
-  /* ─── ISSUES TABLE ─── */
-  .table-card { background: var(--white); border-radius: var(--r-lg); border: 1px solid var(--g200); box-shadow: var(--sh-card); overflow: hidden; }
-  .table-hdr { background: var(--g900); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
-  .table-hdr-t { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--g400); }
-  .ds-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  .ds-table thead th { background: var(--g100); color: var(--g500); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 8px 14px; text-align: left; border-bottom: 1px solid var(--g200); }
-  .ds-table tbody tr { border-bottom: 1px solid var(--g100); transition: background .15s; }
-  .ds-table tbody tr:hover { background: var(--g50); }
-  .ds-table tbody tr:last-child { border-bottom: none; }
-  .ds-table td { padding: 10px 14px; color: var(--g700); vertical-align: middle; }
-  .ds-table td:first-child { font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--g500); white-space: nowrap; }
-  .issue-sum { font-size: 12px; font-weight: 600; color: var(--black); line-height: 1.35; }
-  .issue-sum small { display: block; font-size: 10px; font-weight: 400; color: var(--g500); margin-top: 1px; }
-
-  /* ─── BADGES ─── */
-  .badge { padding: 2px 9px; border-radius: var(--r-full); font-size: 10px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; }
-  .b-done   { background: rgba(26,138,74,.1);  color: var(--ok); }
-  .b-prog   { background: rgba(245,168,0,.12); color: var(--bsj-dk); }
-  .b-test   { background: rgba(43,127,212,.1); color: var(--bsc-dk); }
-  .b-todo   { background: var(--g100); color: var(--g500); }
-  .b-spike  { background: var(--g100); color: var(--g600); }
-  .b-hist   { background: rgba(43,127,212,.08); color: var(--bsc-dk); }
-  .b-task   { background: rgba(38,125,38,.08); color: var(--bsf-dk); }
-
-  /* ─── TYPE CHIP ─── */
-  .type-chip { font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
-  .t-hist { background: rgba(43,127,212,.1); color: var(--bsc-dk); }
-  .t-spik { background: var(--g100); color: var(--g500); }
-  .t-task { background: rgba(38,125,38,.08); color: var(--bsf-dk); }
-  .t-other { background: var(--g50); color: var(--g400); }
-
-  /* ─── ASSIGNEE PANEL ─── */
-  .assign-list { display: flex; flex-direction: column; gap: 0; }
-  .assign-row { display: flex; align-items: center; gap: 10px; padding: 9px 16px; border-bottom: 1px solid var(--g100); }
-  .assign-row:last-child { border-bottom: none; }
-  .assign-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--g900); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
-  .assign-name { font-size: 12px; font-weight: 600; color: var(--black); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .assign-bar-wrap { width: 80px; background: var(--g100); border-radius: var(--r-full); height: 4px; flex-shrink: 0; overflow: hidden; }
-  .assign-bar { height: 100%; border-radius: var(--r-full); background: var(--bsj); }
-  .assign-count { font-size: 11px; font-weight: 700; color: var(--g600); font-family: var(--mono); width: 20px; text-align: right; flex-shrink: 0; }
-
-  /* ─── DAYS TIMELINE ─── */
-  .timeline-card { background: var(--white); border-radius: var(--r-lg); padding: 20px 24px; border: 1px solid var(--g200); box-shadow: var(--sh-card); }
-  .timeline-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .tl-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--g400); }
-  .tl-dates { display: flex; justify-content: space-between; font-size: 10px; color: var(--g500); font-family: var(--mono); margin-top: 8px; }
-  .day-track { height: 8px; background: var(--g100); border-radius: var(--r-full); overflow: hidden; position: relative; }
-  .day-fill { height: 100%; background: linear-gradient(90deg, var(--black), var(--g700)); border-radius: var(--r-full); }
-  .day-today { position: absolute; top: -3px; height: 14px; width: 2px; background: var(--bsj); border-radius: 1px; }
-  .tl-stat { text-align: center; }
-  .tl-stat-val { font-size: 22px; font-weight: 800; color: var(--black); letter-spacing: -.03em; }
-  .tl-stat-lbl { font-size: 10px; color: var(--g500); font-weight: 500; }
-
-  /* ─── SUMMARY RIBBON ─── */
-  .ribbon { background: var(--g900); border-radius: var(--r-lg); padding: 16px 22px; display: flex; gap: 32px; align-items: center; }
-  .ribbon-item { text-align: center; }
-  .ribbon-val { font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -.03em; }
-  .ribbon-lbl { font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--g500); margin-top: 2px; }
-  .ribbon-div { width: 1px; background: var(--g700); align-self: stretch; }
-
-  /* ─── FOOTER ─── */
-  .ftr { background: var(--black); padding: 18px 48px; display: flex; align-items: center; justify-content: space-between; }
-  .ftr-l { font-size: 12px; color: var(--g500); }
-  .ftr-l strong { color: var(--g300); }
-  .ftr-r { font-family: var(--mono); font-size: 10px; color: var(--g700); letter-spacing: .08em; }
-
-  /* ─── STATUS DOT ─── */
-  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-  .dot-done { background: var(--ok); }
-  .dot-prog { background: var(--bsj); }
-  .dot-test { background: var(--info); }
-  .dot-todo { background: var(--g300); }
-
-  .update-time { font-family: var(--mono); font-size: 9px; color: var(--g600); background: rgba(255,255,255,.06); padding: 3px 8px; border-radius: var(--r-full); border: 1px solid rgba(255,255,255,.08); }
-</style>
-</head>
-<body>
 <script>
 (function() {
   const HASH = "d690597c86eda77739afadffe0cd8b34f4a8069278a829553aac6ba0fc21f9eb";
   const KEY  = "gp_hbi_auth_v1";
+
   async function sha256(msg) {
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
   }
+
   function showGate() {
     document.body.style.overflow = "hidden";
     const gate = document.createElement("div");
@@ -209,12 +37,15 @@
           <div style="font-size:10px;color:#444;margin-top:16px">Sprint HBI Plataforma · Uso interno</div>
         </div>
       </div>
-    \`;
+    `;
     document.body.appendChild(gate);
+
     const pw  = gate.querySelector("#gate-pw");
     const btn = gate.querySelector("#gate-btn");
     const err = gate.querySelector("#gate-err");
+
     pw.addEventListener("keydown", e => { if (e.key === "Enter") btn.click(); });
+
     btn.addEventListener("click", async () => {
       btn.textContent = "Verificando…";
       btn.disabled = true;
@@ -232,8 +63,10 @@
         btn.disabled = false;
       }
     });
+
     setTimeout(() => pw.focus(), 100);
   }
+
   if (sessionStorage.getItem(KEY) !== HASH) {
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", showGate);
@@ -244,489 +77,309 @@
 })();
 </script>
 
-<!-- HEADER -->
+<style>
+  :root{--black:#000;--g900:#111;--g800:#1A1A1A;--g700:#2C2C2C;--g600:#444;--g500:#6B6B6B;--g400:#909090;--g300:#C4C4C4;--g200:#E0E0E0;--g100:#F0F0F0;--g50:#F5F5F5;--white:#fff;--bsj:#F5A800;--bsj-dk:#C98A00;--ok:#1A8A4A;--warn:#D48A00;--err:#CC1A1A;--info:#2B7FD4;--font:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;--r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;--r-full:9999px;--sh-card:0 1px 3px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.06);--sh-hover:0 4px 12px rgba(0,0,0,.12),0 8px 32px rgba(0,0,0,.08);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--g50);color:var(--black);font-family:var(--font);font-size:14px;line-height:1.6;}
+  .hdr{background:var(--black);position:relative;overflow:hidden;}
+  .sh{position:absolute;border-radius:16px;background:rgba(255,255,255,.04);}
+  .sh1{width:220px;height:110px;right:80px;top:28px;transform:rotate(-7deg);}
+  .sh2{width:140px;height:140px;right:270px;top:-28px;transform:rotate(14deg);}
+  .sh3{width:180px;height:75px;right:36px;bottom:16px;transform:rotate(4deg);}
+  .hdr-inner{position:relative;max-width:1140px;margin:0 auto;padding:42px 48px 36px;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;}
+  .gp-circle{width:38px;height:38px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--black);}
+  .gp-word{color:var(--white);font-size:13px;font-weight:600;line-height:1.3;}
+  .gp-word span{display:block;font-weight:300;font-size:10px;color:var(--g400);letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}
+  .hdr-logo{display:flex;align-items:center;gap:13px;margin-bottom:18px;}
+  .hdr h1{font-size:30px;font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-.025em;}
+  .hdr h1 em{font-style:normal;color:var(--g400);font-weight:300;}
+  .ver-tag{display:inline-block;background:rgba(245,168,0,.15);color:var(--bsj);font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 12px;border-radius:var(--r-full);border:1px solid rgba(245,168,0,.3);margin-bottom:8px;}
+  .hdr-right{text-align:right;flex-shrink:0;}
+  .hdr-meta{font-size:11px;color:var(--g500);line-height:1.9;font-family:var(--mono);}
+  .hdr-meta strong{color:var(--g300);}
+  .body{max-width:1140px;margin:0 auto;padding:40px 48px 60px;display:flex;flex-direction:column;gap:32px;}
+  .eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--g400);margin-bottom:4px;}
+  .section-title{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--black);margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid var(--g200);display:flex;align-items:center;justify-content:space-between;}
+  .section-title span{font-size:12px;font-weight:400;color:var(--g400);letter-spacing:0;}
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .kpi-card{background:var(--white);border-radius:var(--r-lg);padding:18px 16px 16px;border:1px solid var(--g200);box-shadow:var(--sh-card);border-top:3px solid var(--g300);transition:box-shadow .2s;}
+  .kpi-card:hover{box-shadow:var(--sh-hover);}
+  .kpi-card.done{border-top-color:var(--ok);} .kpi-card.prog{border-top-color:var(--bsj);}
+  .kpi-card.test{border-top-color:var(--info);} .kpi-card.todo{border-top-color:var(--g400);}
+  .kpi-card.total{border-top-color:var(--black);}
+  .kpi-label{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g400);margin-bottom:10px;}
+  .kpi-val{font-size:38px;font-weight:800;letter-spacing:-.04em;color:var(--black);line-height:1;}
+  .kpi-pct{font-size:11px;font-weight:500;color:var(--g500);margin-top:6px;}
+  .kpi-pct strong{font-weight:700;} .kpi-pct.ok strong{color:var(--ok);} .kpi-pct.warn strong{color:var(--warn);} .kpi-pct.info strong{color:var(--info);}
+  .progress-card{background:var(--white);border-radius:var(--r-lg);padding:22px 24px;border:1px solid var(--g200);box-shadow:var(--sh-card);}
+  .prog-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px;}
+  .prog-title{font-size:13px;font-weight:700;color:var(--black);} .prog-sub{font-size:11px;color:var(--g500);margin-top:2px;}
+  .prog-pct-big{font-size:32px;font-weight:800;letter-spacing:-.03em;color:var(--black);}
+  .prog-pct-big span{font-size:14px;font-weight:500;color:var(--g400);}
+  .prog-track{height:10px;background:var(--g100);border-radius:var(--r-full);overflow:hidden;margin-bottom:10px;display:flex;gap:2px;}
+  .prog-fill{height:100%;border-radius:var(--r-full);}
+  .prog-fill.done{background:var(--ok);} .prog-fill.test{background:var(--info);} .prog-fill.prog{background:var(--bsj);} .prog-fill.todo{background:var(--g200);}
+  .prog-legend{display:flex;gap:18px;flex-wrap:wrap;}
+  .leg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--g600);}
+  .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .goal-item{background:var(--white);border-radius:var(--r-md);padding:14px 16px;border:1px solid var(--g200);box-shadow:var(--sh-card);display:flex;gap:12px;align-items:flex-start;}
+  .goal-num{width:24px;height:24px;border-radius:50%;background:var(--g900);color:var(--white);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .goal-text{font-size:12px;color:var(--g700);line-height:1.5;}
+  .two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;}
+  .table-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--g200);box-shadow:var(--sh-card);overflow:hidden;}
+  .table-hdr{background:var(--g900);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .table-hdr-t{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--g400);}
+  .ds-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .ds-table thead th{background:var(--g100);color:var(--g500);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;text-align:left;border-bottom:1px solid var(--g200);}
+  .ds-table tbody tr{border-bottom:1px solid var(--g100);transition:background .15s;}
+  .ds-table tbody tr:hover{background:var(--g50);} .ds-table tbody tr:last-child{border-bottom:none;}
+  .ds-table td{padding:10px 14px;color:var(--g700);vertical-align:middle;}
+  .ds-table td:first-child{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--g500);white-space:nowrap;}
+  .issue-sum{font-size:12px;font-weight:600;color:var(--black);line-height:1.35;}
+  .badge{padding:2px 9px;border-radius:var(--r-full);font-size:10px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;}
+  .b-done{background:rgba(26,138,74,.1);color:var(--ok);} .b-prog{background:rgba(245,168,0,.12);color:var(--bsj-dk);}
+  .b-test{background:rgba(43,127,212,.1);color:#1A5FA0;} .b-todo{background:var(--g100);color:var(--g500);}
+  .type-chip{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;white-space:nowrap;}
+  .t-hist{background:rgba(43,127,212,.1);color:#1A5FA0;} .t-spik{background:var(--g100);color:var(--g500);}
+  .t-task{background:rgba(38,125,38,.08);color:#1A5A1A;} .t-other{background:var(--g50);color:var(--g400);}
+  .assign-list{display:flex;flex-direction:column;}
+  .assign-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--g100);}
+  .assign-row:last-child{border-bottom:none;}
+  .assign-avatar{width:28px;height:28px;border-radius:50%;color:var(--white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+  .assign-name{font-size:12px;font-weight:600;color:var(--black);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .assign-bar-wrap{width:80px;background:var(--g100);border-radius:var(--r-full);height:4px;flex-shrink:0;overflow:hidden;}
+  .assign-bar{height:100%;border-radius:var(--r-full);background:var(--bsj);}
+  .assign-count{font-size:11px;font-weight:700;color:var(--g600);font-family:var(--mono);width:20px;text-align:right;flex-shrink:0;}
+  .day-track{height:8px;background:var(--g100);border-radius:var(--r-full);overflow:visible;position:relative;margin-bottom:8px;}
+  .day-fill{height:100%;background:linear-gradient(90deg,var(--black),var(--g700));border-radius:var(--r-full);}
+  .day-marker{position:absolute;top:-3px;height:14px;width:2px;background:var(--bsj);border-radius:1px;}
+  .tl-dates{display:flex;justify-content:space-between;font-size:10px;color:var(--g500);font-family:var(--mono);}
+  .ftr{background:var(--black);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;}
+  .ftr-l{font-size:12px;color:var(--g500);} .ftr-l strong{color:var(--g300);}
+  .ftr-r{font-family:var(--mono);font-size:10px;color:var(--g700);letter-spacing:.08em;}
+  .update-time{font-family:var(--mono);font-size:9px;color:var(--g600);background:rgba(255,255,255,.06);padding:3px 8px;border-radius:var(--r-full);border:1px solid rgba(255,255,255,.08);}
+</style>
+</head>
+<body>
 <header class="hdr">
-  <div style="position:absolute;inset:0;overflow:hidden">
-    <div class="sh sh1"></div><div class="sh sh2"></div><div class="sh sh3"></div><div class="sh sh4"></div><div class="sh sh5"></div>
-  </div>
+  <div style="position:absolute;inset:0;overflow:hidden"><div class="sh sh1"></div><div class="sh sh2"></div><div class="sh sh3"></div></div>
   <div class="hdr-inner">
     <div>
       <div class="hdr-logo">
         <div class="gp-circle">G·P</div>
         <div class="gp-word">Grupo Petersen <span>Canales Digitales · HBI Plataforma</span></div>
       </div>
-      <h1>Sprint Dashboard<br><em>& Evolución del Sprint</em></h1>
+      <h1>Sprint Dashboard<br><em>& Evolución</em></h1>
     </div>
     <div class="hdr-right">
-      <div class="ver-tag">Sprint 25 · v97</div>
+      <div class="ver-tag">Feature v96.1</div>
       <div class="hdr-meta">
-        <strong>HBI Plataforma Sprint 25 (v97)</strong><br>
-        19 mar → 08 abr 2026 &nbsp;·&nbsp; 20 días<br>
-        Actualizado: 27/03/2026
+        <strong>Sprint activo · Feature v96.1</strong><br>
+        19/03/2026 → 08/04/2026 &nbsp;·&nbsp; 20 días<br>
+        Actualizado: 27/03/2026 15:21
       </div>
     </div>
   </div>
 </header>
-
 <main class="body">
-
-  <!-- KPIs -->
   <section>
     <div class="eyebrow">01 — Estado General</div>
     <div class="kpi-row">
-      <div class="kpi-card total">
-        <div class="kpi-label">Total Issues</div>
-        <div class="kpi-val">98</div>
-        <div class="kpi-pct">Sprint activo</div>
-      </div>
-      <div class="kpi-card done">
-        <div class="kpi-label">Listo</div>
-        <div class="kpi-val">37</div>
-        <div class="kpi-pct ok"><strong>37.8%</strong> completado</div>
-      </div>
-      <div class="kpi-card test">
-        <div class="kpi-label">En Testing</div>
-        <div class="kpi-val">7</div>
-        <div class="kpi-pct info"><strong>7.1%</strong> del total</div>
-      </div>
-      <div class="kpi-card prog">
-        <div class="kpi-label">En Progreso</div>
-        <div class="kpi-val">32</div>
-        <div class="kpi-pct warn"><strong>32.7%</strong> del total</div>
-      </div>
-      <div class="kpi-card todo">
-        <div class="kpi-label">Por Hacer</div>
-        <div class="kpi-val">22</div>
-        <div class="kpi-pct"><strong>22.4%</strong> del total</div>
-      </div>
+      <div class="kpi-card total"><div class="kpi-label">Total Issues</div><div class="kpi-val">15</div><div class="kpi-pct">Sprint activo</div></div>
+      <div class="kpi-card done"><div class="kpi-label">Listo</div><div class="kpi-val">11</div><div class="kpi-pct ok"><strong>73.3%</strong> completado</div></div>
+      <div class="kpi-card test"><div class="kpi-label">En Testing</div><div class="kpi-val">0</div><div class="kpi-pct info"><strong>0.0%</strong> del total</div></div>
+      <div class="kpi-card prog"><div class="kpi-label">En Progreso</div><div class="kpi-val">3</div><div class="kpi-pct warn"><strong>20.0%</strong> del total</div></div>
+      <div class="kpi-card todo"><div class="kpi-label">Por Hacer</div><div class="kpi-val">1</div><div class="kpi-pct"><strong>6.7%</strong> del total</div></div>
     </div>
   </section>
-
-  <!-- PROGRESS + TIMELINE -->
   <section>
     <div class="eyebrow">02 — Evolución</div>
-    <div style="display:grid;grid-template-columns:1fr 320px;gap:16px">
-
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:16px">
       <div class="progress-card">
         <div class="prog-header">
-          <div>
-            <div class="prog-title">Progreso del Sprint</div>
-            <div class="prog-sub">Tickets completados vs. tiempo transcurrido</div>
-          </div>
-          <div style="text-align:right">
-            <div class="prog-pct-big">44.9<span>%</span></div>
-            <div style="font-size:10px;color:var(--g500);margin-top:2px">Done + Testing</div>
-          </div>
+          <div><div class="prog-title">Progreso del Sprint</div><div class="prog-sub">Tickets completados vs. tiempo transcurrido</div></div>
+          <div style="text-align:right"><div class="prog-pct-big">73.3<span>%</span></div><div style="font-size:10px;color:var(--g500);margin-top:2px">Done + Testing</div></div>
         </div>
-        <!-- Stacked progress: listo / testing / en progreso / todo -->
         <div class="prog-track">
-          <div class="prog-fill done" style="width:37.8%"></div>
-          <div class="prog-fill test" style="width:7.1%"></div>
-          <div class="prog-fill prog" style="width:32.7%"></div>
-          <div class="prog-fill todo" style="width:22.4%"></div>
+          <div class="prog-fill done" style="width:73.3%"></div>
+          <div class="prog-fill test" style="width:0.0%"></div>
+          <div class="prog-fill prog" style="width:20.0%"></div>
+          <div class="prog-fill todo" style="width:6.7%"></div>
         </div>
         <div class="prog-legend">
-          <div class="leg"><div class="leg-dot" style="background:var(--ok)"></div>Listo (37)</div>
-          <div class="leg"><div class="leg-dot" style="background:var(--info)"></div>En Testing (7)</div>
-          <div class="leg"><div class="leg-dot" style="background:var(--bsj)"></div>En Progreso (32)</div>
-          <div class="leg"><div class="leg-dot" style="background:var(--g300)"></div>Por Hacer (22)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--ok)"></div>Listo (11)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--info)"></div>En Testing (0)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--bsj)"></div>En Progreso (3)</div>
+          <div class="leg"><div class="leg-dot" style="background:var(--g300)"></div>Por Hacer (1)</div>
         </div>
-
-        <!-- Tiempo -->
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--g100)">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div class="tl-label">Tiempo del Sprint</div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g400)">Tiempo del Sprint</div>
             <div style="font-size:11px;color:var(--g500)">Hoy: 27/03/2026</div>
           </div>
-          <div class="day-track" style="position:relative">
-            <div class="day-fill" style="width:40%"></div>
-            <div class="day-today" style="left:40%"></div>
+          <div class="day-track">
+            <div class="day-fill" style="width:40.0%"></div>
+            <div class="day-marker" style="left:40.0%"></div>
           </div>
-          <div class="tl-dates">
-            <span>19 mar</span>
-            <span style="color:var(--bsj);font-weight:600">◆ Hoy (día 8/20 · 40%)</span>
-            <span>08 abr</span>
-          </div>
+          <div class="tl-dates"><span>19/03/2026</span><span style="color:var(--bsj);font-weight:600">◆ Hoy (día 8/20 · 40.0%)</span><span>08/04/2026</span></div>
         </div>
       </div>
-
-      <div class="timeline-card">
-        <div class="tl-label" style="margin-bottom:16px">Resumen temporal</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="table-card" style="border-radius:var(--r-lg)">
+        <div class="table-hdr"><span class="table-hdr-t">Resumen temporal</span></div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
           <div style="text-align:center;padding:12px;background:var(--g50);border-radius:var(--r-md)">
-            <div class="tl-stat-val">12</div>
-            <div class="tl-stat-lbl">días restantes</div>
+            <div style="font-size:28px;font-weight:800;letter-spacing:-.03em">12</div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);margin-top:2px">días restantes</div>
           </div>
           <div style="text-align:center;padding:12px;background:rgba(26,138,74,.06);border-radius:var(--r-md)">
-            <div class="tl-stat-val" style="color:var(--ok)">37</div>
-            <div class="tl-stat-lbl">tickets cerrados</div>
+            <div style="font-size:28px;font-weight:800;color:var(--ok);letter-spacing:-.03em">11</div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);margin-top:2px">tickets cerrados</div>
           </div>
           <div style="text-align:center;padding:12px;background:rgba(245,168,0,.08);border-radius:var(--r-md)">
-            <div class="tl-stat-val" style="color:var(--bsj-dk)">61</div>
-            <div class="tl-stat-lbl">tickets activos</div>
-          </div>
-          <div style="font-size:10px;color:var(--g500);text-align:center;line-height:1.6">
-            Regresión y liberación:<br>
-            <strong style="color:var(--black);font-size:12px">01 de abril 2026</strong>
+            <div style="font-size:28px;font-weight:800;color:var(--bsj-dk);letter-spacing:-.03em">4</div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);margin-top:2px">tickets activos</div>
           </div>
         </div>
       </div>
-
     </div>
   </section>
-
-  <!-- SPRINT GOALS -->
   <section>
     <div class="eyebrow">03 — Objetivos del Sprint</div>
-    <div class="section-title">Compromisos Sprint 25 (v97) <span>5 objetivos · Liberación 01 abr</span></div>
+    <div class="section-title">Compromisos <span>Liberación: 08/04/2026</span></div>
     <div class="goals-grid">
       <div class="goal-item">
         <div class="goal-num">1</div>
-        <div class="goal-text">
-          <strong>Valida en VU Fraud</strong>
-          Integrar Valida en la invocación de reglas de VU Fraud para mejorar la detección de fraude.
-        </div>
-      </div>
-      <div class="goal-item">
-        <div class="goal-num">2</div>
-        <div class="goal-text">
-          <strong>Feedback Qualtrics</strong>
-          Recopilar feedback de usuarios sobre su experiencia en MB Android/iOS con Qualtrics App Review.
-        </div>
-      </div>
-      <div class="goal-item">
-        <div class="goal-num">3</div>
-        <div class="goal-text">
-          <strong>SDK Visa 5.6</strong>
-          Actualizar la SDK Visa a versión 5.6 para solucionar el paginado de 16k en G Pay y Apple Wallet.
-        </div>
-      </div>
-      <div class="goal-item">
-        <div class="goal-num">4</div>
-        <div class="goal-text">
-          <strong>Validación de dispositivos</strong>
-          Facilitar la validación de dispositivos de confianza incorporando criterio de orden descendente por estado y fecha.
-        </div>
-      </div>
-      <div class="goal-item" style="grid-column:1/-1">
-        <div class="goal-num">5</div>
-        <div class="goal-text">
-          <strong>Mail instructivo ATM desde BO</strong>
-          Permitir actualizar el contenido del mail de instrucciones de Clave ATM a través del Back Office, sin intervención técnica.
-        </div>
-      </div>
-    </div>
+        <div class="goal-text">Entrega: 20/03/26</div>
+      </div></div>
   </section>
-
-  <!-- ISSUES TABLE + ASSIGNEES -->
   <section>
-    <div class="eyebrow">04 — Historias & Spikes</div>
-    <div class="section-title">Detalle de Issues principales <span>Excluye subtareas (71)</span></div>
+    <div class="eyebrow">04 — Issues principales</div>
+    <div class="section-title">Historias, Spikes & Tareas <span>Excluye subtareas</span></div>
     <div class="two-col">
-
       <div class="table-card">
-        <div class="table-hdr">
-          <span class="table-hdr-t">Issues del Sprint · Historias, Spikes & Tareas</span>
-          <span class="update-time">27/03/2026</span>
-        </div>
+        <div class="table-hdr"><span class="table-hdr-t">Issues del Sprint</span><span class="update-time">27/03/2026 15:21</span></div>
         <table class="ds-table">
-          <thead>
-            <tr>
-              <th>Key</th>
-              <th>Issue</th>
-              <th>Tipo</th>
-              <th>Estado</th>
-              <th>Responsable</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Key</th><th>Issue</th><th>Tipo</th><th>Estado</th><th>Responsable</th></tr></thead>
           <tbody>
-            <!-- HISTORIAS EN PROGRESO -->
             <tr>
-              <td>HBI-3638</td>
-              <td><div class="issue-sum">Integrar Valida en VU Fraud<small>Invocación de reglas de VU Fraud · Objetivo #1</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>K. Aguirre</td>
+              <td>HBI-3548</td>
+              <td><div class="issue-sum">V.90.0- PLATAFORMA- ANDROID/IOS- TODOS LOS BANCOS- FCI - El footer de la…</div></td>
+              <td><span class="type-chip t-other">Error</span></td>
+              <td><span class="badge b-done">✓ Listo</span></td>
+              <td>Constanza Torres</td>
             </tr>
             <tr>
-              <td>HBI-6134</td>
-              <td><div class="issue-sum">App Review Qualtrics — SDK Android/iOS<small>Actualización SDK · Objetivo #2</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
+              <td>HBI-3555</td>
+              <td><div class="issue-sum">UAT v1.90- PLATAFORMA - Todos los Bancos -Web/Mobile - HBI-3095- Compone…</div></td>
+              <td><span class="type-chip t-other">Error</span></td>
+              <td><span class="badge b-done">✓ Listo</span></td>
+              <td>Constanza Torres</td>
             </tr>
             <tr>
-              <td>HBI-2137</td>
-              <td><div class="issue-sum">SDK Visa 5.6.01 — G Pay y Apple Wallet<small>Solución paginado 16k · Objetivo #3</small></div></td>
+              <td>HBI-5728</td>
+              <td><div class="issue-sum">Quiero como negocio poder definir ciertos atributos del componente genér…</div></td>
               <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
+              <td><span class="badge b-done">✓ Listo</span></td>
+              <td>Karla Aguirre</td>
             </tr>
             <tr>
-              <td>HBI-6275</td>
-              <td><div class="issue-sum">Dispositivos de confianza ordenados<small>Orden descendente por estado y fecha · Objetivo #4</small></div></td>
+              <td>HBI-4242</td>
+              <td><div class="issue-sum">Quiero ejecutar una logica para la validación de clientes migrados (migr…</div></td>
               <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
+              <td><span class="badge b-done">✓ Listo</span></td>
+              <td>Nicolas Pirsztuk</td>
             </tr>
             <tr>
-              <td>HBI-6319</td>
-              <td><div class="issue-sum">Editar mail instrucciones ATM desde BO<small>Actualización de contenido sin deploy · Objetivo #5</small></div></td>
+              <td>HBI-3492</td>
+              <td><div class="issue-sum">Quiero integrar Valida en flujo Validación de dispositivo no conocido en…</div></td>
               <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>S. Roldan</td>
+              <td><span class="badge b-prog">En progreso</span></td>
+              <td>Nicolas Pirsztuk</td>
             </tr>
             <tr>
-              <td>HBI-5519</td>
-              <td><div class="issue-sum">WhatsApp como canal de contacto en HB<small>Reemplaza chat "La Mano" en Individuos</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>F. Abbattista</td>
-            </tr>
-            <tr>
-              <td>HBI-3097</td>
-              <td><div class="issue-sum">Mejorar consulta de Códigos postales (Parte 2)<small>Tablas de parametría del core</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
-            </tr>
-            <tr>
-              <td>HBI-4003</td>
-              <td><div class="issue-sum">Consultar usuarios por CUIT/CUIL en BO<small>Back Office · Búsqueda por tipo de documento</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>F. Abbattista</td>
-            </tr>
-            <tr>
-              <td>HBI-4724</td>
-              <td><div class="issue-sum">Cambios en título operación/apertura comitente<small>Visualización y UX</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>F. Abbattista</td>
-            </tr>
-            <tr>
-              <td>HBI-5591</td>
-              <td><div class="issue-sum">Botón "Ir a mi perfil" en negro — BSJ<small>Ajuste visual Homebanking BSJ</small></div></td>
-              <td><span class="type-chip t-hist">Historia</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
-            </tr>
-            <!-- SPIKES EN PROGRESO -->
-            <tr>
-              <td>HBI-5936</td>
-              <td><div class="issue-sum">SDK Adobe Journey Optimizer<small>Implementación e investigación</small></div></td>
+              <td>HBI-6709</td>
+              <td><div class="issue-sum">Necesitamos que los deeplinks a una sección especifica de la app se pued…</div></td>
               <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>J. Benitez Pizarro</td>
+              <td><span class="badge b-todo">Por hacer</span></td>
+              <td>Joyce Evelyn</td>
             </tr>
             <tr>
-              <td>HBI-6199</td>
-              <td><div class="issue-sum">Impacto permisos nuevos para integrar Valida<small>Análisis de impacto</small></div></td>
-              <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>K. Aguirre</td>
+              <td>HBI-6501</td>
+              <td><div class="issue-sum">V.1.96.0- UPS- UAT- TODOS LOS BANCOS-IOS- Al ingresar al Log in Con usua…</div></td>
+              <td><span class="type-chip t-other">Error</span></td>
+              <td><span class="badge b-done">✓ Listo</span></td>
+              <td>Mariangela Del</td>
             </tr>
             <tr>
-              <td>HBI-6490</td>
-              <td><div class="issue-sum">Consulta tablas transaccionales — Reportería RU<small>Análisis de datos</small></div></td>
-              <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
-            </tr>
-            <tr>
-              <td>HBI-6480</td>
-              <td><div class="issue-sum">NFC · Silent Push — Revisión integración Cordova<small>Reunión técnica</small></div></td>
-              <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>L. Bermeo</td>
-            </tr>
-            <tr>
-              <td>HBI-6484</td>
-              <td><div class="issue-sum">Documentación MODO 3.27.0<small>Análisis nueva versión</small></div></td>
-              <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>L. Bermeo</td>
-            </tr>
-            <!-- SPIKES LISTO -->
-            <tr>
-              <td>HBI-6377</td>
-              <td><div class="issue-sum">Investigar solución UX CAM para homebanking<small>✓ Completado</small></div></td>
-              <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-done"><span class="dot dot-done"></span>Listo</span></td>
-              <td>F. Abbattista</td>
-            </tr>
-            <tr>
-              <td>HBI-6339</td>
-              <td><div class="issue-sum">Ajuste tiempos sesión inactiva — Empresas<small>✓ Investigación completada</small></div></td>
-              <td><span class="type-chip t-spik">Spike</span></td>
-              <td><span class="badge b-done"><span class="dot dot-done"></span>Listo</span></td>
-              <td>S. Roldan</td>
-            </tr>
-            <!-- TAREAS -->
-            <tr>
-              <td>HBI-6521</td>
-              <td><div class="issue-sum">Tareas Nodo SP24+SP25<small>Gestión y coordinación</small></div></td>
-              <td><span class="type-chip t-task">Tarea</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>C. Torres Pardo</td>
-            </tr>
-            <tr>
-              <td>HBI-6632</td>
-              <td><div class="issue-sum">Reuniones de Equipo Plataforma SP25<small>Ceremonias ágiles</small></div></td>
-              <td><span class="type-chip t-other">Reunion</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>N. Pirsztuk</td>
-            </tr>
-            <tr>
-              <td>HBI-6639</td>
-              <td><div class="issue-sum">Regresión 97 — Plataforma SP25<small>Pruebas de regresión · Fecha: 01 abr</small></div></td>
-              <td><span class="type-chip t-other">Regresión</span></td>
-              <td><span class="badge b-prog"><span class="dot dot-prog"></span>En progreso</span></td>
-              <td>C. Torres Pardo</td>
-            </tr>
-          </tbody>
+              <td>HBI-6693</td>
+              <td><div class="issue-sum">UAT V 1.96.1 – BSF -BO - PLATAFORMA -Al ingresar a BO de Valida y Cyberb…</div></td>
+              <td><span class="type-chip t-other">Error</span></td>
+              <td><span class="badge b-prog">En progreso</span></td>
+              <td>Karla Aguirre</td>
+            </tr></tbody>
         </table>
       </div>
-
-      <!-- ASSIGNEES -->
-      <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:14px">
         <div class="table-card">
-          <div class="table-hdr">
-            <span class="table-hdr-t">Issues por Responsable</span>
-            <span class="update-time">Total incl. subtareas</span>
-          </div>
+          <div class="table-hdr"><span class="table-hdr-t">Por Responsable</span></div>
           <div class="assign-list">
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#1A5FA0">NP</div>
-              <div class="assign-name">Nicolas Pirsztuk</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:100%"></div></div>
-              <div class="assign-count">17</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#267D26">CT</div>
-              <div class="assign-name">Constanza Torres Pardo</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:88%"></div></div>
-              <div class="assign-count">15</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#2C2C2C">JB</div>
-              <div class="assign-name">Joyce Benitez Pizarro</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:70%"></div></div>
-              <div class="assign-count">12</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#444">—</div>
-              <div class="assign-name">Sin asignar</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:82%;background:var(--g300)"></div></div>
-              <div class="assign-count">14</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#C98A00">FA</div>
-              <div class="assign-name">Francisco Abbattista</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:35%"></div></div>
-              <div class="assign-count">6</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#991212">CM</div>
-              <div class="assign-name">Carolina Meccico</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:29%"></div></div>
-              <div class="assign-count">5</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#1A5A1A">KA</div>
-              <div class="assign-name">Karla Aguirre</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
-              <div class="assign-count">3</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#2C2C2C">MR</div>
-              <div class="assign-name">M. Ayelen Roccell</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
-              <div class="assign-count">3</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#1A5FA0">LB</div>
-              <div class="assign-name">Luis Bermeo</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
-              <div class="assign-count">3</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#444">CA</div>
-              <div class="assign-name">Celeste Aguero</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:18%"></div></div>
-              <div class="assign-count">3</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#267D26">SR</div>
-              <div class="assign-name">Sabrina Roldan</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:12%"></div></div>
-              <div class="assign-count">2</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#2C2C2C">DA</div>
-              <div class="assign-name">Dex Avegliano</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:12%"></div></div>
-              <div class="assign-count">2</div>
-            </div>
-            <div class="assign-row">
-              <div class="assign-avatar" style="background:#444">+5</div>
-              <div class="assign-name" style="color:var(--g500)">Otros (5 personas)</div>
-              <div class="assign-bar-wrap"><div class="assign-bar" style="width:35%;background:var(--g200)"></div></div>
-              <div class="assign-count" style="color:var(--g400)">6</div>
-            </div>
-          </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#1A5FA0">KA</div>
+          <div class="assign-name">Karla Aguirre</div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:100%"></div></div>
+          <div class="assign-count">5</div>
         </div>
-
-        <!-- Distribución por tipo -->
-        <div class="table-card">
-          <div class="table-hdr">
-            <span class="table-hdr-t">Distribución por Tipo</span>
-          </div>
-          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px">
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
-                <span>Subtareas</span><span style="color:var(--g500);font-family:var(--mono)">71 · 72.4%</span>
-              </div>
-              <div class="prog-track" style="height:6px">
-                <div class="prog-fill" style="width:72.4%;background:var(--g300)"></div>
-              </div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
-                <span>Historias</span><span style="color:var(--bsc-dk);font-family:var(--mono)">12 · 12.2%</span>
-              </div>
-              <div class="prog-track" style="height:6px">
-                <div class="prog-fill" style="width:12.2%;background:var(--bsc)"></div>
-              </div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
-                <span>Spikes</span><span style="color:var(--g500);font-family:var(--mono)">11 · 11.2%</span>
-              </div>
-              <div class="prog-track" style="height:6px">
-                <div class="prog-fill" style="width:11.2%;background:var(--g500)"></div>
-              </div>
-            </div>
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
-                <span>Otros (Tareas, Ceremonias, Regresión)</span><span style="color:var(--g400);font-family:var(--mono)">4 · 4.1%</span>
-              </div>
-              <div class="prog-track" style="height:6px">
-                <div class="prog-fill" style="width:4.1%;background:var(--bsj)"></div>
-              </div>
-            </div>
-          </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#267D26">CT</div>
+          <div class="assign-name">Constanza Torres Pardo</div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:40%"></div></div>
+          <div class="assign-count">2</div>
+        </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#C98A00">—</div>
+          <div class="assign-name">Sin asignar</div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:40%"></div></div>
+          <div class="assign-count">2</div>
+        </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#2C2C2C">NP</div>
+          <div class="assign-name">Nicolas Pirsztuk</div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:40%"></div></div>
+          <div class="assign-count">2</div>
+        </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#991212">DA</div>
+          <div class="assign-name">Daniela  Alvarado Martinez</div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:20%"></div></div>
+          <div class="assign-count">1</div>
+        </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#444">BC</div>
+          <div class="assign-name">Bilmania Carapaz </div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:20%"></div></div>
+          <div class="assign-count">1</div>
+        </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#1A5A1A">JE</div>
+          <div class="assign-name">Joyce Evelyn Benitez Pizarro </div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:20%"></div></div>
+          <div class="assign-count">1</div>
+        </div>
+        <div class="assign-row">
+          <div class="assign-avatar" style="background:#2B7FD4">MD</div>
+          <div class="assign-name">Mariangela Del Valle Brito Gomez</div>
+          <div class="assign-bar-wrap"><div class="assign-bar" style="width:20%"></div></div>
+          <div class="assign-count">1</div>
+        </div></div>
         </div>
       </div>
     </div>
   </section>
-
 </main>
-
 <footer class="ftr">
-  <div class="ftr-l"><strong>Grupo Petersen · Canales Digitales</strong> — HBI Plataforma Sprint 25 (v97) · Dashboard interno</div>
-  <div class="ftr-r">GENERADO 27/03/2026 · JIRA rapidView=650 sprint=1957</div>
+  <div class="ftr-l"><strong>Grupo Petersen · Canales Digitales</strong> — Feature v96.1 · Dashboard interno</div>
+  <div class="ftr-r">GENERADO 27/03/2026 15:21</div>
 </footer>
-
 </body>
 </html>
