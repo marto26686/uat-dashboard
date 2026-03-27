@@ -44,10 +44,11 @@ jobs:
 
       - name: Generar dashboards
         env:
-          JIRA_URL:      ${{ secrets.JIRA_URL }}
-          JIRA_USER:     ${{ secrets.JIRA_USER }}
-          JIRA_TOKEN:    ${{ secrets.JIRA_TOKEN }}
-          JIRA_BOARD_ID: ${{ inputs.board_id || '650' }}
+          JIRA_URL:           ${{ secrets.JIRA_URL }}
+          JIRA_USER:          ${{ secrets.JIRA_USER }}
+          JIRA_TOKEN:         ${{ secrets.JIRA_TOKEN }}
+          JIRA_BOARD_ID:      ${{ inputs.board_id || '650' }}
+          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           SPRINT_ARG=""
           if [ -n "${{ inputs.sprint_id }}" ]; then

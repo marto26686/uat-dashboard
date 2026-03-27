@@ -214,6 +214,61 @@ def auth_gate_js(hash_val: str, page_title: str) -> str:
 """
 
 
+# ─── CLAUDE AI ENRICHMENT ──────────────────────────────────────────────────────
+def enrich_with_claude(issues: list, sprint_name: str, api_key: str) -> dict:
+    """
+    Llama a Claude API (claude-haiku) para enriquecer issues con títulos y
+    descripciones comerciales. Devuelve {issue_key: {title, description}}.
+    Si falla, devuelve {} y el script continúa con los títulos originales de Jira.
+    """
+    import re as _re
+    to_enrich = [i for i in issues if i["type"] in ("Historia", "Spike", "Tarea")][:18]
+    if not to_enrich:
+        return {}
+    items_text = "\n".join(
+        f"[{i['key']}] {i['type']}: {i['summary']}"
+        for i in to_enrich
+    )
+    prompt = (
+        f'Sos redactor técnico del área Canales Digitales de Grupo Petersen (banco argentino).\n'
+        f'Generás la release note del sprint "{sprint_name}" para audiencia interna (tech + negocio).\n\n'
+        f'Para cada issue de Jira generá:\n'
+        f'- "title": título comercial en español, sin "Quiero X para Y" ni "Como X quiero", máx 70 chars.\n'
+        f'  Ej: "Quiero tener WhatsApp como canal de contacto" → "WhatsApp como canal de contacto en Homebanking"\n'
+        f'- "description": 1-2 oraciones sobre el valor para el usuario/negocio, sin jerga, máx 160 chars.\n\n'
+        f'Issues:\n{items_text}\n\n'
+        f'Respondé ÚNICAMENTE con JSON válido (sin markdown, sin texto extra):\n'
+        f'{{"HBI-XXXX": {{"title": "...", "description": "..."}}}}'
+    )
+    body = json.dumps({
+        "model": "claude-haiku-4-5-20251001",
+        "max_tokens": 4000,
+        "messages": [{"role": "user", "content": prompt}]
+    }).encode()
+    req = request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=body,
+        headers={
+            "x-api-key":         api_key,
+            "anthropic-version": "2023-06-01",
+            "content-type":      "application/json",
+        }
+    )
+    try:
+        with request.urlopen(req, timeout=60) as r:
+            response = json.loads(r.read())
+        text = response["content"][0]["text"].strip()
+        m = _re.search(r'```(?:json)?\s*([\s\S]+?)\s*```', text)
+        if m:
+            text = m.group(1)
+        result = json.loads(text)
+        print(f"[INFO] Claude enrichment OK: {len(result)} issues enriquecidos")
+        return result
+    except Exception as e:
+        print(f"[WARN] Claude enrichment falló ({e}); usando títulos de Jira", file=sys.stderr)
+        return {}
+
+
 # ─── HTML GENERATORS ───────────────────────────────────────────────────────────
 def generate_dashboard(sprint: dict, data: dict, days: dict) -> str:
     sprint_name = sprint.get("name", "Sprint Activo")
@@ -495,7 +550,7 @@ def generate_dashboard(sprint: dict, data: dict, days: dict) -> str:
 </html>"""
 
 
-def generate_release_note(sprint: dict, data: dict, days: dict) -> str:
+def generate_release_note(sprint: dict, data: dict, days: dict, enriched: dict = None) -> str:
     sprint_name = sprint.get("name", "Sprint Activo")
     sprint_goal = sprint.get("goal", "")
     counts = data["counts"]
@@ -584,22 +639,74 @@ def generate_release_note(sprint: dict, data: dict, days: dict) -> str:
     tag_icons_map = {"security": "🔐", "mobile": "📱", "backoffice": "🖥️",
                      "integration": "💬", "ux": "🎨"}
 
+    enriched = enriched or {}
     for iss in stories[:8]:
-        summary = iss["summary"]
-        title = clean_summary(summary)
+        summary  = iss["summary"]
+        ai       = enriched.get(iss["key"], {})
+        title    = ai.get("title") or clean_summary(summary)
+        desc     = ai.get("description", "")
         tag_label, tag_class, icon = "Funcionalidad", "integration", type_icons.get(iss["type"], "📋")
         sumlow = summary.lower()
         for kw, (lbl, cls, ico) in tags.items():
             if kw.lower() in sumlow:
                 tag_label, tag_class, icon = lbl, cls, ico
                 break
+        desc_html = f'<div class="feat-desc">{desc}</div>' if desc else ""
         features_html += f"""
           <div class="feature-item">
             <div class="feat-icon">{icon}</div>
             <div class="feat-body">
               <div class="feat-tag {tag_class}">{tag_label}</div>
               <div class="feat-title">{title}</div>
+              {desc_html}
               <div class="feat-ticket">{iss["key"]}</div>
+            </div>
+          </div>"""
+
+    # ── Spikes / Investigaciones ───────────────────────────────────────────────
+    spikes = [i for i in data["issues"]
+              if i["type"] in ("Spike",) or
+              any(w in i["summary"].lower() for w in
+                  ["análisis", "analisis", "investigación", "spike", "poc", "ux cam",
+                   "sdk", "modo ", "nfc", "adobe", "tiempos de sesión", "tiempos de sesion"])]
+    spikes = [i for i in spikes if i["type"] != "Historia"][:6]
+
+    spike_icons = {
+        "ux": "🎨", "cam": "🎨",
+        "adobe": "📊", "journey": "📊",
+        "nfc": "📲", "push": "📲",
+        "modo": "🔗",
+        "sesión": "⏱️", "sesion": "⏱️",
+        "sdk": "📦",
+    }
+
+    spikes_html = ""
+    for sp in spikes:
+        ai = enriched.get(sp["key"], {})
+        sp_title = ai.get("title") or clean_summary(sp["summary"])
+        sp_desc  = ai.get("description") or ""
+        sp_done  = "listo" in sp["status"].lower() or "done" in sp["status"].lower()
+        status_badge = (
+            '<div style="font-size:10px;font-weight:600;color:#1A8A4A;margin-top:3px">✓ Completado</div>'
+            if sp_done else
+            '<div style="font-size:10px;font-weight:600;color:#D48A00;margin-top:3px">⏳ En progreso</div>'
+        )
+        bg_style = (
+            'background:rgba(38,125,38,.05);border-left:3px solid #267D26;'
+            if sp_done else 'background:#F5F5F5;'
+        )
+        sp_icon = "🔬"
+        for kw, ico in spike_icons.items():
+            if kw in sp["summary"].lower():
+                sp_icon = ico
+                break
+        spikes_html += f"""
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:12px;{bg_style}border-radius:10px">
+            <div style="font-size:20px">{sp_icon}</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#000;margin-bottom:2px">{sp_title}</div>
+              {'<div style="font-size:11px;color:#6B6B6B">' + sp_desc + '</div>' if sp_desc else ''}
+              {status_badge}
             </div>
           </div>"""
 
@@ -663,6 +770,7 @@ def generate_release_note(sprint: dict, data: dict, days: dict) -> str:
   .feat-tag.backoffice{{background:rgba(245,168,0,.12);color:#C98A00;}}
   .feat-tag.integration{{background:#F0F0F0;color:#444;}}
   .feat-title{{font-size:13px;font-weight:700;color:#000;margin-bottom:3px;}}
+  .feat-desc{{font-size:12px;color:#6B6B6B;line-height:1.5;margin-bottom:3px;}}
   .feat-ticket{{font-size:10px;color:#C4C4C4;font-family:monospace;margin-top:4px;}}
   .goals-grid{{display:grid;grid-template-columns:1fr 1fr;gap:10px;}}
   .goal-card{{background:#F5F5F5;border-radius:10px;padding:14px;}}
@@ -759,6 +867,12 @@ def generate_release_note(sprint: dict, data: dict, days: dict) -> str:
       <div class="sec-title">Funcionalidades</div>
       <div class="feature-list">{features_html}</div>
     </div>
+    {f'''<div class="sec" style="border-top:1px solid #F0F0F0">
+      <div class="sec-eyebrow">Investigaciones &amp; Spikes</div>
+      <div class="sec-title">Análisis técnicos en curso</div>
+      <div class="sec-desc">El equipo técnico trabaja en paralelo en una serie de investigaciones que informarán decisiones de futuras versiones.</div>
+      <div style="display:flex;flex-direction:column;gap:8px">{spikes_html}</div>
+    </div>''' if spikes_html else ''}
     <div class="cta-section">
       <div class="cta-box">
         <div><div class="cta-title">Ver la pizarra del sprint</div><div class="cta-sub">Detalle en tiempo real en Jira</div></div>
@@ -815,9 +929,18 @@ def main():
 
     print(f"[INFO] Estado: {data['counts']}")
 
+    # Enriquecimiento opcional con Claude AI
+    api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    enriched = {}
+    if api_key:
+        print("[INFO] ANTHROPIC_API_KEY detectada — enriqueciendo con Claude AI…")
+        enriched = enrich_with_claude(issues, sprint["name"], api_key)
+    else:
+        print("[INFO] Sin ANTHROPIC_API_KEY — usando títulos originales de Jira")
+
     # Generate HTML
     dashboard_html = generate_dashboard(sprint, data, days)
-    release_html   = generate_release_note(sprint, data, days)
+    release_html   = generate_release_note(sprint, data, days, enriched=enriched)
 
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
