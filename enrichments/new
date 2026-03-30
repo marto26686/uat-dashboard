@@ -1,0 +1,146 @@
+{
+  "HBI-6656": {
+    "title": "Intercepto App en la Home",
+    "description": "Incorporación de un intercepto dentro de la aplicación mobile en la pantalla de Home, pendiente de descripción detallada."
+  },
+  "HBI-6653": {
+    "title": "Plan de pago via WhatsApp para consumos con TC Visa",
+    "description": "Incorporación de un banner en el detalle de la Tarjeta de Crédito Visa que permite al usuario solicitar un plan de pago siendo redireccionado a WhatsApp con un mensaje predefinido, con control de visibilidad mediante variable de configuración por banco."
+  },
+  "HBI-6650": {
+    "title": "Integrar UX CAM a Homebanking Individuos",
+    "description": "Integración de UXCam, herramienta de analítica UX para apps móviles, en Homebanking Individuos. Permite grabación de sesiones, heatmaps, análisis de funnels y detección de errores en Android e iOS."
+  },
+  "HBI-6580": {
+    "title": "Fecha de acreditación en ticket por rescate 24x7",
+    "description": "Incorporación de la fecha de acreditación en el comprobante generado por operaciones de rescate de fondos en la modalidad 24x7, pendiente de descripción detallada."
+  },
+  "HBI-6494": {
+    "title": "Implementación de Deeplinks para navegación a productos Qualia en Homebanking",
+    "description": "Implementación de soporte de Deeplinks de Qualia en Homebanking para permitir redirecciones directas desde URLs externas hacia la home o hacia productos de seguros específicos, tanto en Web (via sessionStorage) como en Mobile (Android e iOS)."
+  },
+  "HBI-6376": {
+    "title": "Actualización de SDK MODO a la versión 3.27.0",
+    "description": "Actualización de la SDK de MODO a la versión 3.27.0 en la aplicación mobile Android, con regresión completa para asegurar que no se afecten funcionalidades existentes."
+  },
+  "HBI-6146": {
+    "title": "Movimientos pendientes de autorización con nombre correcto del comercio",
+    "description": "Corrección en la visualización de movimientos pendientes de TC: se reemplaza el campo transaction_type por merchant_name (con prefijo 'PEND - ') para mostrar el nombre real del comercio en autorizaciones pendientes de Tarjeta de Crédito."
+  },
+  "HBI-6144": {
+    "title": "Redirección a sección Seguros desde card de ofertas en BERSA",
+    "description": "Actualización del componente de cards de ofertas de seguros en la Home para redirigir al iframe de Qualia en Banco Entre Ríos (BERSA) cuando la variable de negocio está activa, manteniendo la experiencia bancaria tradicional en los demás bancos."
+  },
+  "HBI-6132": {
+    "title": "Integración del iframe de Qualia en sección Seguros de BSJ",
+    "description": "Integración del iframe de Qualia como punto de acceso a la experiencia de seguros en la sección correspondiente de Homebanking y Mobile Banking de Banco San Juan (BSJ)."
+  },
+  "HBI-6131": {
+    "title": "Integración del iframe de Qualia en sección Seguros de BSC",
+    "description": "Integración del iframe de Qualia como punto de acceso a la experiencia de seguros en la sección correspondiente de Homebanking y Mobile Banking de Banco San Cristóbal (BSC)."
+  },
+  "HBI-6130": {
+    "title": "Integración del iframe de Qualia en sección Seguros de BERSA",
+    "description": "Integración del iframe de Qualia en Homebanking Web y Mobile Banking de Banco Entre Ríos (BERSA) como único punto de acceso a la experiencia de seguros, cargando el iframe al ingresar desde la opción 'Seguros'."
+  },
+  "HBI-6044": {
+    "title": "Cambios en el servicio Denunciar robo o extravío de TC (V2)",
+    "description": "Migración del servicio de denuncia de robo o extravío de Tarjeta de Crédito de la API Prisma Lost and Stolen v1 (a deprecar) a la v2, con variables de configuración técnica para habilitar/deshabilitar el nuevo endpoint y la URL base de Prisma v2."
+  },
+  "HBI-6024": {
+    "title": "Integrar Valida en el flujo de activación de Soft-Token desde Perfil",
+    "description": "Integración del componente de validación biométrica Valida en el flujo de activación de Soft-Token desde la sección Perfil, activándose cuando VU Fraud detecta que una operación supera las reglas de riesgo predefinidas para el usuario."
+  },
+  "HBI-5574": {
+    "title": "Compilación y pruebas de SDK MODO (Después de 31/03/2026)",
+    "description": "Actualización, compilación y pruebas de regresión completa del SDK de MODO a la nueva versión indicada por el proveedor, en iOS y Android, planificada para ejecutarse después del 31/03/2026."
+  },
+  "HBI-5373": {
+    "title": "Mejoras en Plazo Fijo",
+    "description": "Mejoras funcionales en la sección de Plazo Fijo de Homebanking, pendiente de descripción detallada."
+  },
+  "HBI-4849": {
+    "title": "Redirección al iframe de Qualia desde card de oferta de seguros post-préstamo",
+    "description": "Al confirmar un préstamo en BSF, la card de oferta de seguros redirige al usuario al iframe de Qualia para el seguro ofertado, mediante variable de configuración. Los bancos UNYSIS mantienen el flujo de seguros propio del banco."
+  },
+  "HBI-4723": {
+    "title": "Actualización de taggeos en préstamos personales",
+    "description": "Actualización de los eventos y taggeos de la sección de Préstamos Personales para corregir inconsistencias y alinearlos con el documento de taggeos, mejorando el análisis del funnel y la toma de decisiones basadas en datos."
+  },
+  "HBI-4634": {
+    "title": "Redirección a Seguros al abandonar el flujo de contratación de Tarjeta o Préstamo",
+    "description": "Al abandonar el flujo de contratación de una Tarjeta de Crédito o Préstamo en BSF, se muestra un pop-up de oferta de seguros que redirige al iframe de Qualia cuando la variable está activa. Los bancos UNYSIS mantienen el flujo propio del banco."
+  },
+  "HBI-4446": {
+    "title": "Legajo Digital — Usuarios PEP",
+    "description": "Incorporación del soporte para usuarios PEP (Personas Expuestas Políticamente) en el flujo de Legajo Digital, con maqueta funcional en proceso."
+  },
+  "HBI-4400": {
+    "title": "Nuevo diseño en configuración de mensajes del banco (mail y push)",
+    "description": "Rediseño de la interfaz de configuración de mensajes del banco, tanto para correo electrónico como para notificaciones push, pendiente de descripción detallada."
+  },
+  "HBI-4268": {
+    "title": "Insert asincrónico en Audit_Log",
+    "description": "Optimización del proceso de Login mediante la conversión del insert en la tabla Audit_Log de sincrónico a asincrónico, eliminando la demora notable que genera actualmente en el proceso de autenticación."
+  },
+  "HBI-4022": {
+    "title": "Pausado de Tarjeta de Débito",
+    "description": "Implementación de la funcionalidad de pausar una Tarjeta de Débito desde Homebanking, pendiente de descripción detallada."
+  },
+  "HBI-4021": {
+    "title": "Pausado de Tarjeta de Crédito",
+    "description": "Implementación de la funcionalidad de pausar una Tarjeta de Crédito desde Homebanking, pendiente de descripción detallada."
+  },
+  "HBI-3988": {
+    "title": "Click-to-pay",
+    "description": "Implementación de la funcionalidad Click-to-pay en la plataforma de Homebanking, pendiente de descripción detallada."
+  },
+  "HBI-3982": {
+    "title": "Venta de paquetes",
+    "description": "Implementación del flujo de venta de paquetes de productos bancarios desde Homebanking, pendiente de descripción detallada."
+  },
+  "HBI-3460": {
+    "title": "Debilidad en los registros de VU Onboarding",
+    "description": "Corrección de inconsistencias en los registros de VU Onboarding: ante una validación express fallida, el SFD rechaza la operación pero Cyberbank registra éxito y VU no mantiene registro del intento fallido, generando inconsistencia de datos."
+  },
+  "HBI-3459": {
+    "title": "Mensaje para rehabilitar notificaciones push",
+    "description": "Incorporación de un pop-up informativo que invita a los usuarios con notificaciones push deshabilitadas a volver a activarlas, destacando los beneficios de estar informado sobre novedades y operaciones del banco."
+  },
+  "HBI-3368": {
+    "title": "Nuevo mensaje en la activación de datos biométricos",
+    "description": "Ajuste del texto informativo en la pantalla de activación biométrica a 'Verificá tus datos biométricos', para los casos en que el usuario debe volver a registrar sus datos por cambio de dispositivo. Archivado: se resolvió mediante variables de Back Office."
+  },
+  "HBI-3367": {
+    "title": "Eliminar registro de TC virtual cuando el campo enable sea true",
+    "description": "En el flujo de Tarjeta de Crédito Virtual, cuando el campo enable del card detail sea true, se elimina el registro correspondiente de la tabla temporal para mantener la consistencia de datos y evitar información transitoria innecesaria."
+  },
+  "HBI-3241": {
+    "title": "TC — Último pago en pesos y dólares",
+    "description": "Visualización del último pago realizado en Tarjeta de Crédito desglosado en pesos y dólares, consumiendo los campos del endpoint /details del servicio Card Transaction Data Services."
+  },
+  "HBI-3114": {
+    "title": "Supresión de imágenes en base64 de los logs de Omnichannel",
+    "description": "Optimización de los logs de Omnichannel mediante la supresión de imágenes genéricas en base64, ofuscando las respuestas en el API::OUT de la activity get.image.custom, conservando únicamente las imágenes de comprobantes de transacciones."
+  },
+  "HBI-3023": {
+    "title": "Revisión y actualización de canales de contacto",
+    "description": "Implementación del flujo de validación de canales de contacto (teléfono y email) con registro trazable en el core bancario, en cumplimiento de normativa BCRA que exige registrar el dispositivo, fecha y hora de cada validación."
+  },
+  "HBI-3014": {
+    "title": "TC listar movimientos",
+    "description": "Corrección de error (pantalla UPS) al ingresar a la sección de listado de movimientos de Tarjeta de Crédito cuando la funcionalidad se encuentra apagada mediante variable de configuración."
+  },
+  "HBI-2448": {
+    "title": "Variable de control para invocación del servicio getOfferRequest en alta de TC",
+    "description": "Incorporación de la variable de negocio 'request.service.productOffer.enable' para activar o desactivar la invocación del servicio getOfferRequest en el flujo de consulta de estados de alta de TC, permitiendo medir el impacto del cambio sin afectar producción."
+  },
+  "HBI-2033": {
+    "title": "Registro del método de 2FA utilizado en la confirmación de transacciones",
+    "description": "Incorporación del campo de método de segundo factor de autenticación (2FA) en el DataLayer de Google Analytics, para conocer qué método utilizó el usuario al confirmar cada transacción o flujo en Homebanking."
+  },
+  "HBI-1114": {
+    "title": "Importe estimado de primera cuota y cuota promedio en Cuotificación",
+    "description": "Se agrega un nuevo campo dinámico que muestra el importe estimado de la primera cuota bajo la tabla de cuotas. Se renombra la columna 'Importe primera cuota' a 'Cuota promedio' y se reordena la información en pantallas de resumen y ticket según maqueta."
+  }
+}
