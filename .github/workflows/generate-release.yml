@@ -14,9 +14,7 @@ on:
         default: '650'
         type: string
 
-  # Automático: lunes y jueves a las 9am (Argentina = UTC-3)
-  schedule:
-    - cron: '0 12 * * 1,4'   # 12:00 UTC = 09:00 ART
+  # Solo ejecución manual desde GitHub Actions UI
 
 jobs:
   generate:
