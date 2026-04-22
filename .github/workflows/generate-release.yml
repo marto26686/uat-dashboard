@@ -16,6 +16,9 @@ on:
 
   # Solo ejecución manual desde GitHub Actions UI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   generate:
     name: Generar dashboards desde Jira
